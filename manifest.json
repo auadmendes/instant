@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Instant",
+  "version": "1.0.0",
+  "icons": {
+    "16": "src/assets/text.png",
+    "48": "src/assets/text.png",
+    "128": "src/assets/text.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "action": { 
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", 
+      "https://www.instagram.com/*", 
+      "https://chatgpt.com/*",
+      "https://mail.google.com/*",
+      "https://mail.google.com/mail/u/0/#inbox?compose=new",
+      "https://www.facebook.com/?locale=pt_BR",
+      "https://www.notion.so/Links-and-tools-640d8b97e1e14b1c8ddc92c59fdcef22",
+      "https://mail.google.com/mail/u/0/#inbox?compose=DmwnWtVcJRjxdjtnqlGKBSwdXhwkRMLhHDbwvFdcNTzCzdLCtjpljXHcZnNrpsdNkMVgksdQHGwQ",
+      "https://www.flaticon.com/search?word=type&k=1736987457617&log-in=google"],
+      "js": ["src/content/content.ts"], 
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/assets/*.png"],
+      "matches": []
+    }
+  ],
+  "options_page": "options.html",
+  "devtools_page": "pages/devtools.html",
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  }
+}
