@@ -25,7 +25,10 @@
       "https://www.notion.so/Links-and-tools-640d8b97e1e14b1c8ddc92c59fdcef22",
       "https://mail.google.com/mail/u/0/#inbox?compose=DmwnWtVcJRjxdjtnqlGKBSwdXhwkRMLhHDbwvFdcNTzCzdLCtjpljXHcZnNrpsdNkMVgksdQHGwQ",
       "https://www.flaticon.com/search?word=type&k=1736987457617&log-in=google"],
-      "js": ["src/content/content.ts"], 
+      "js": [
+        "src/content/content.ts",
+        "src/content/salesfroce.ts",
+      ], 
       "run_at": "document_idle",
       "all_frames": true
     }
