@@ -1,198 +1,208 @@
 const snippets: { [trigger: string]: string } = {
-  "-sign": "Luciano | Docusign Customer Support <docusign.com>",
-  "-comment": `
-  - [Matter] The client<br>
-  - [Action]<br>
-  - [Resource] N/A`,
-  "-call": `If you'd like to schedule a meeting, you can use my calendar link to pick a time that works for you: <a href="https://calendly.com/your-link" target="_blank">Calendly link</a>.`,
+  "-sign": `Best regards,\nLuciano | Docusign Customer\nSupport docusign.com`,
+  "-com": `- [Matter] The client\n- [Action]\n- [Resource] N/A`,
+  "-com-html": `<p>- [Matter] The client</br>- [Action]</br>- [Resource] N/A</p>`,
+  "-call": `<i>If you'd like to schedule a meeting, you can use my calendar link to pick a time that works for you: <a href="https://calendly.com/luciano-docusign/30min" target="_blank" rel="noopener noreferrer">Calendly link</a>.</i>`,
+  "-plain-call": `If you'd like to schedule a meeting, you can use my calendar link to pick a time that works for you: https://calendly.com/luciano-docusign/30min`,
+  "-test": `My test = My test`
 };
 
-
-// Handle input in the contenteditable field
-function handleContentEditableInput(event: KeyboardEvent) {
-  const target = event.target as HTMLElement;
-  const selection = window.getSelection();
-
-  if (!selection || !selection.rangeCount) return;
-
-  const range = selection.getRangeAt(0);
-  const cursorPosition = range.startOffset;
-  const container = range.startContainer;
-
-  const text = container.textContent || "";
-  const beforeCursor = text.slice(0, cursorPosition);
-  const afterCursor = text.slice(cursorPosition);
-
-  for (const trigger in snippets) {
-    if (beforeCursor.includes(trigger)) {
-      const updatedText = beforeCursor.replace(trigger, snippets[trigger]) + afterCursor;
-
-      container.textContent = updatedText;
-
-      // Update cursor position
-      const newCursorPosition =
-        beforeCursor.length - trigger.length + snippets[trigger].length;
-      range.setStart(container, newCursorPosition);
-      range.setEnd(container, newCursorPosition);
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      break;
-    }
-  }
-}
-
-// General Input Handler
-function handleInput(event: KeyboardEvent) {
-  const target = event.target as HTMLElement;
-
-  // Handle standard input and textarea fields
-  if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
-    processSnippetForInput(target as HTMLInputElement | HTMLTextAreaElement);
+// Function to handle dynamic trigger replacement in text
+function handleKeydown(event: KeyboardEvent, target: HTMLElement) {
+  if (!target) {
+      return;
   }
 
-  // Handle contenteditable fields
   if (target.isContentEditable) {
-    processSnippetForContentEditable(target);
+      handleContentEditableInput(target);
+  } else if (target.tagName === "INPUT" || target.tagName === "TEXTAREA") {
+      handleInputField(event, target as HTMLInputElement | HTMLTextAreaElement);
   }
 }
 
-// Process snippets for standard inputs
-function processSnippetForInput(target: HTMLInputElement | HTMLTextAreaElement) {
-  const cursorPosition = target.selectionStart || 0;
-  const value = target.value;
-
-  const beforeCursor = value.slice(0, cursorPosition);
-  const afterCursor = value.slice(cursorPosition);
-
-  // Check for a snippet trigger in the text before the cursor
-  for (const trigger in snippets) {
-    if (beforeCursor.includes(trigger)) {
-      const updatedText = beforeCursor.replace(trigger, snippets[trigger]) + afterCursor;
-      target.value = updatedText;
-
-      // Move cursor to the end of the inserted snippet
-      const newCursorPosition = updatedText.indexOf(snippets[trigger]) + snippets[trigger].length;
-      target.setSelectionRange(newCursorPosition, newCursorPosition);
-      break;
-    }
-  }
-}
-
-// Process snippets for contenteditable fields
-function processSnippetForContentEditable(target: HTMLElement) {
+function handleContentEditableInput(target: HTMLElement) {
   const selection = window.getSelection();
   if (!selection || selection.rangeCount === 0) return;
 
   const range = selection.getRangeAt(0);
   const container = range.startContainer;
-  const cursorPosition = range.startOffset;
+
+  if (container.nodeType !== Node.TEXT_NODE) return;
 
   const text = container.textContent || "";
+  const cursorPosition = range.startOffset;
+
   const beforeCursor = text.slice(0, cursorPosition);
   const afterCursor = text.slice(cursorPosition);
 
-  // Check for a snippet trigger in the text before the cursor
   for (const trigger in snippets) {
-    if (beforeCursor.includes(trigger)) {
-      const updatedText = beforeCursor.replace(trigger, snippets[trigger]) + afterCursor;
+      if (beforeCursor.endsWith(trigger)) {
+          // Replacing
+          const updatedHTML = beforeCursor.replace(trigger, snippets[trigger]) + afterCursor;
 
-      container.textContent = updatedText;
+          // Create a temporary element to parse and inject HTML
+          const tempElement = document.createElement("div");
+          tempElement.innerHTML = updatedHTML;
 
-      // Update cursor position
-      const newCursorPosition =
-        beforeCursor.length - trigger.length + snippets[trigger].length;
-      range.setStart(container, newCursorPosition);
-      range.setEnd(container, newCursorPosition);
-      selection.removeAllRanges();
-      selection.addRange(range);
+          // Replace the current content
+          const nodes = Array.from(tempElement.childNodes);
+          const parent = container.parentNode;
+          if (parent) {
+              parent.replaceChild(document.createTextNode(beforeCursor.slice(0, -trigger.length)), container);
+              nodes.forEach((node) => parent.appendChild(node));
+          }
 
-      break;
-    }
+          console.log(`Snippet "${trigger}" replaced in contenteditable.`);
+          break;
+      }
   }
 }
 
-// Focus and Blur Styles
-function handleFocus(event: FocusEvent) {
-  const target = event.target as HTMLElement;
-  if (
-    target &&
-    (target.tagName === "INPUT" ||
-      target.tagName === "TEXTAREA" ||
-      target.getAttribute("contenteditable") === "true")
-  ) {
-    target.style.backgroundColor = "#ccc";
+function handleInputField(event: KeyboardEvent, target: HTMLInputElement | HTMLTextAreaElement) {
+  const value = target.value;
+  const cursorPosition = target.selectionStart || 0;
+
+  const beforeCursor = value.slice(0, cursorPosition);
+  const afterCursor = value.slice(cursorPosition);
+
+  for (const trigger in snippets) {
+      if (beforeCursor.endsWith(trigger)) {
+          const snippet = target.tagName === "TEXTAREA" && trigger === "-call" ? snippets["-plain-call"] : snippets[trigger];
+          const updatedText = beforeCursor.replace(trigger, snippet) + afterCursor;
+
+          target.value = updatedText;
+
+          const newCursorPosition = updatedText.length - afterCursor.length;
+          target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+          console.log(`Snippet "${trigger}" replaced in input/textarea.`);
+          break;
+      }
   }
 }
 
-function handleBlur(event: FocusEvent) {
-  const target = event.target as HTMLElement;
-  if (
-    target &&
-    (target.tagName === "INPUT" ||
-      target.tagName === "TEXTAREA" ||
-      target.getAttribute("contenteditable") === "true")
-  ) {
-    target.style.backgroundColor = "";
+
+
+
+
+
+
+//
+
+// Start observing the document
+document.addEventListener("keydown", (event) => handleKeydown(event as KeyboardEvent, event.target as HTMLElement));
+
+// Start observing the document
+// document.addEventListener("DOMContentLoaded", () => {
+//   console.log("Attaching listeners to iframes...");
+//   attachListenersToAllIframes();
+//   monitorDynamicIframes();
+//   attachListenersToContentEditable(); // Initial attachment for outside iframe elements
+// });
+
+/////////////////////////////////////////////////////////////////
+
+function changeCKEditorBackgroundColor(color: string) {
+  const iframes = document.querySelectorAll<HTMLIFrameElement>('iframe.cke_wysiwyg_frame');
+
+  if (iframes.length === 0) {
+      console.error('No CKEditor iframe found.');
+      return;
+  }
+
+  if (iframes.forEach) {
+      iframes.forEach((iframe) => {
+          try {
+              const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+              if (!iframeDoc) {
+                  console.warn('Unable to access iframe document.');
+                  return;
+              }
+
+              // Try to find the focused editable div using the cke_focus class
+              const editableElement = iframeDoc.querySelector('.cke_wysiwyg_div.cke_focus');
+
+              if (editableElement) {
+                  (editableElement as HTMLElement).style.backgroundColor = color;
+                  console.log(`Background color changed to ${color} in CKEditor.`);
+              } else {
+                  // If the focus class isn't present, try to find the generic editable div
+                  const genericEditableElement = iframeDoc.querySelector('.cke_wysiwyg_div');
+                  if (genericEditableElement) {
+                      (genericEditableElement as HTMLElement).style.backgroundColor = color;
+                      console.log(`Background color changed to ${color} in CKEditor (generic).`);
+                  } else {
+                      console.error('No editable element found inside the CKEditor iframe.');
+                  }
+              }
+          } catch (err) {
+              console.warn('Error accessing iframe:', err);
+          }
+      });
   }
 }
 
-// Gmail-specific handling
-function waitForGmailFields() {
-  const observer = new MutationObserver(() => {
-    const subjectBox = document.querySelector('input[name="subjectbox"]');
-    const bodyDiv = document.querySelector('[aria-label="Corpo da mensagem"][contenteditable="true"]');
+// Example usage
+document.addEventListener('DOMContentLoaded', () => {
+  const newColor = 'yellow'; // Change this to the desired background color
+  changeCKEditorBackgroundColor(newColor);
+});
 
-    if (subjectBox) {
-      subjectBox.addEventListener("keydown", handleInput);
-      subjectBox.addEventListener("focus", handleFocus);
-      subjectBox.addEventListener("blur", handleBlur);
-    }
 
-    if (bodyDiv) {
-      bodyDiv.addEventListener("keydown", handleInput);
-      bodyDiv.addEventListener("focus", handleFocus);
-      bodyDiv.addEventListener("blur", handleBlur);
-    }
+//Working for Salesforce
+function replaceTestStringsInIframe(): void {
+  // Select the iframe with the class 'cke_wysiwyg_frame'
+  const iframes = document.querySelectorAll<HTMLIFrameElement>('.cke_wysiwyg_frame');
 
-    // Disconnect observer after adding listeners
-    if (subjectBox && bodyDiv) {
-      observer.disconnect();
-    }
-  });
+  if (!iframes || iframes.length === 0) {
+      //console.warn('Iframe with class "cke_wysiwyg_frame" not found.');
+      return;
+  }
 
-  observer.observe(document.body, { childList: true, subtree: true });
+  if (iframes.forEach) {
+      iframes.forEach((iframe) => {
+          if (!iframe || !iframe.contentDocument || !iframe.contentDocument.body) {
+              console.warn('Iframe or iframe body not found.');
+              return;
+          }
+
+          // Get the body inside the iframe
+          const iframeBody = iframe.contentDocument.body;
+
+          // Add a red border to the body
+          iframeBody.style.border = '1px solid gray';
+
+          const contentIframe = iframeBody.innerHTML;
+
+        // Replace all occurrences of "-myTest"
+            const updatedContent = contentIframe.replace(/-test/g, "This is my test now.");
+            if (contentIframe !== updatedContent) {
+                iframeBody.innerHTML = updatedContent;
+            }
+
+          // Find the editable div
+          const editableDiv = iframeBody.querySelector<HTMLElement>('.cke_wysiwyg_div');
+
+          if (!editableDiv) {
+              console.warn('No element with class "cke_wysiwyg_div" found inside the iframe.');
+              return;
+          }
+
+          let content = editableDiv.innerHTML;
+          for (const trigger in snippets) {
+              const snippet = snippets[trigger];
+              const regex = new RegExp(escapeRegExp(trigger), 'g');
+              content = content.replace(regex, snippet);
+          }
+
+          editableDiv.innerHTML = content;
+          console.log("Snippet replaced in CKEditor iframe using 'replaceTestStringsInIframe'.");
+      });
+  }
 }
 
-// Salesforce-specific handling
-function waitForSalesforceFields() {
-  let listenersAdded = false;
+// Run the function every 2 seconds
+setInterval(replaceTestStringsInIframe, 1000);
 
-  const observer = new MutationObserver(() => {
-    const replyBox = document.querySelector(
-      'body[contenteditable="true"][aria-label="Email Body"]'
-    );
 
-    if (replyBox && !listenersAdded) {
-      replyBox.addEventListener("keydown", handleInput);
-      replyBox.addEventListener("focus", handleFocus);
-      replyBox.addEventListener("blur", handleBlur);
 
-      listenersAdded = true;
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Global Event Listeners
-document.addEventListener("keydown", handleInput);
-document.addEventListener("focus", handleFocus, true);
-document.addEventListener("blur", handleBlur, true);
-
-// Initialize Gmail-specific handling
-waitForGmailFields();
-
-// Initialize Salesforce-specific handling
-waitForSalesforceFields();

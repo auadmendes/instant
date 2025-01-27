@@ -1,0 +1,1688 @@
+<body class="editor  " data-new-gr-c-s-loaded="14.1218.0">
+	<script type="text/javascript">
+
+	
+
+
+var getUrlParameters = function(url) {
+var querystring = {};
+url = url || window.location.search;
+url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"), function($0, $1, $2, $3) {
+	querystring[$1] = $3;
+});
+return querystring;
+};
+var suffix = self.location.port ? (":" + self.location.port) : "";
+
+var urlParams = getUrlParameters();
+var id = decodeURIComponent(urlParams.id);
+function getTargetOrigin() {
+return true ? decodeURIComponent(urlParams.sfdcIFrameOrigin) : null;
+}
+
+if(true) {
+parent.postMessage(JSON.stringify({ isOriginBeacon: true, iframeId: id }), getTargetOrigin());
+}
+
+
+function verifyOrigin(origin) {
+if(true){
+	var originDetails = new URL(origin);
+	var targetOriginDetails = new URL(getTargetOrigin());
+	return originDetails.protocol === targetOriginDetails.protocol && originDetails.host === targetOriginDetails.host;
+}
+}
+	function setCodeblockStyles(element) {
+if(element) {
+	element.setStyles({
+	background: '#EFEFEF',
+	padding: '8px',
+	display: 'block',
+	border: '1px solid #ccc',
+	'overflow-x': 'auto'
+	});
+}
+}
+
+	function initiateMutationObserverForCharacterData(editorInstance, callback) {	
+		var documentWrapper = editorInstance.document;
+		var documentNode = documentWrapper.$;
+		var observer = new MutationObserver(function (mutations) {
+			mutations.forEach(function (mutation) {
+				if (mutation.type === 'characterData') {
+						callback();
+				}
+			});
+		});
+	
+		observer.observe(documentNode, {
+			attributes: true,
+			childList: true,
+			characterData: true,
+			subtree: true,
+			characterDataOldValue: true
+		});
+	}
+
+	window.onload = function() {
+		/************************ Init ************************/
+		CKEDITOR.timestamp = '4.24.0.3';
+var protocolAndHost = window.location.protocol + '//' + window.location.host;
+
+var editor = CKEDITOR.replace('editor', {
+removePlugins : 'elementspath,maximize,image,tabletools,liststyle,contextmenu,resize',
+baseHref : protocolAndHost + '/ckeditor/ckeditor-4.x/rel/',
+customConfig : '/ckeditor/ckeditor-4.x/rel/sfdc-config.js',
+height : '255',
+bodyId : 'editor_rta_body',
+toolbar : 'CaseLightningEmailWithQT',
+sfdcLabels :{CkeLineHeight : { doubleValue : 'Double', secondValue : '1.15', singleValue : 'Single', thirdValue : '1.5', title : 'Line Height'}, CkeCodeBlock : { addCodeSample : 'Add a code sample'}, CkeQuickText : { title : 'Insert quick text'}, CkeMediaEmbed : { description : 'Use &lt;iframe&gt; code from an approved video source.', example : '\n            \n                &lt;iframe width=\&quot;560\&quot; height=\&quot;315\&quot; src=\&quot;https://www.youtube.com/embed/KcOm0TNvKBA\&quot; frameborder=\&quot;0\&quot; allowfullscreen&gt;&lt;/iframe&gt;\n            \n        ', exampleTitle : 'Example:', iframeMissing : 'Invalid &lt;iframe&gt; element. Please use valid code from the approved sites.', subtitle : 'Paste &amp;lt;iframe&amp;gt; code here:', title : 'Embed Multimedia Content'}, CkeImageMenu : { pasteUrl : 'Paste Image URL', title : 'Insert images into your message', uploadCms : 'Salesforce CMS', uploadFile : ' Browse or Upload', uploadSFFile : 'Salesforce Files', uploadUrl : 'Web Image'}, CkeImagePaste : { CkeImagePasteWarning : 'Pasting an image is not working properly with Firefox, please use [Copy Image location] instead.'}, CkeImageDialog : { btn_insert : 'Insert', btn_insert_tooltip : 'Insert Image', btn_upadte : 'Update', btn_update : 'Update', btn_update_tooltip : 'Update Image', defaultImageDescription : 'User-added image', error : 'Error:', httpUrlWarning : 'Are you sure you want to use an http URL? Using http image URLs may result in security warnings about insecure content. To avoid these warnings, use https image URLs instead.', imageUploadLimit_info : 'Max number of upload images exceeded', infoTab : 'Web Address', infoTab_desc : 'Description', infoTab_desc_info : 'Enter a description of the image for visually impaired users', infoTab_url : 'URL', infoTab_url_info : 'Example: http://www.mysite.com/myimage.jpg', invalidUrlError : 'You can only use http:, https:, data:, //, /, or relative URL schemes.', missingUrlError : 'You must enter a URL', title : 'Insert Image', uploadTab : 'Upload Image', uploadTab_desc : 'Description', uploadTab_desc_info : 'Enter a description of the image for visually impaired users', uploadTab_file : 'Select Image', uploadTab_file_info : 'Maximum size 1 MB. Only PNG, GIF or JPEG', wrongFileTypeError : 'You can insert only .gif .jpeg and .png files.'}, sfdcSwitchToText : { sfdcSwitchToTextAlt : 'Use plain text'}, CkeSmartLink : { SmartLinkContextMenuEdit : 'Edit Smart Link', title : 'Insert a Smart Link'}},
+contentsCss: ['/ckeditor/ckeditor-4.x/rel/contents.css', '/sCSS/62.0/sprites/1729589050000/Theme3/default/gc/CKEditor.css'],
+disableNativeSpellChecker : false,
+language : 'en-US',
+allowIframe : false,
+isPardotOrg : false,
+isCmsOnly : false,
+allowedContent : true,
+sharedSpaces : { top : 'cke_topSpace', bottom : ' cke_bottomSpace' }
+,filebrowserImageUploadUrl : '/_ui/common/request/servlet/RtaImageUploadServlet?_CONFIRMATIONTOKEN=VmpFPSxNakF5TlMwd01TMHlOMVF5TVRvME56b3dOaTQyT0RkYSxBalg1SmxNS28teGhGRGZ2d25OUTVZd2RqVXpfTDQ0OEVJR2JtbGQwQmg4PSxOR0ZtTXpjMg=='
+,fullPage: true
+,extraPlugins : 'sfdcImage,sfdcMediaEmbed,sfdcSmartLink,sfdcCodeBlock,sfdcVfAjax4J,sfdcLineHeight,sfdcImageMenu,sfdcImageDragResize,sfdcQuickText'
+,title : 'Email Body'
+,font_names: 'Arial/Arial, Helvetica, sans-serif;Arial Black/Arial Black, Arial, Helvetica, sans-serif;Arial Narrow/Arial Narrow, Arial, Helvetica, sans-serif;Baskerville/Baskerville, Times New Roman, Times, serif;Book Antiqua/Book Antiqua, Times New Roman, Times, serif;Cambria/Cambria, Times New Roman, Times, serif;Century Gothic/Century Gothic, Arial, Helvetica, sans-serif;Comic Sans MS/Comic Sans MS, Arial, Helvetica, sans-serif;Consolas/Consolas, consolas, monospace;Courier New/Courier New, consolas, monospace;Didot/Didot, Hoefler Text, Times New Roman, Times, serif;Franklin Gothic/Franklin Gothic, Arial, Helvetica, sans-serif;Georgia/Georgia, Times New Roman, Times, serif;Gill Sans/Gill Sans, Arial, Helvetica, sans-serif;Helvetica/Helvetica, Arial, Helvetica, sans-serif;Hoefler Text/Hoefler Text, Times New Roman, Times, serif;Lucida Bright/Lucida Bright, Times New Roman, Times, serif;Lucida Sans Typewriter/Lucida Sans Typewriter, consolas, monospace;Lucida Sans Unicode/Lucida Sans Unicode, Arial, Helvetica, sans-serif;Monaco/Monaco, consolas, monospace;Palatino/Palatino, Times New Roman, Times, serif;Rockwell/Rockwell, Times New Roman, Times, serif;Segoe UI/Segoe UI, Arial, Helvetica, sans-serif;Tahoma/Tahoma, Arial, Helvetica, sans-serif;Times New Roman/Times New Roman, Times New Roman, Times, serif;Tomaha/Tomaha, Arial, Helvetica, sans-serif;Trebuchet MS/Trebuchet MS, Arial, Helvetica, sans-serif;Verdana/Verdana, Arial, Helvetica, sans-serif;'
+});
+
+editor.on('instanceReady', function( evt ) {
+try {
+	var id = evt.editor.name;
+	CKiframe = document.getElementById('cke_' + id).querySelector('iframe');
+	meta = document.createElement('meta');
+	meta.setAttribute('name', 'referrer');
+	meta.setAttribute('content', 'no-referrer');
+	CKiframe.contentDocument.head.appendChild(meta);
+} catch(e) {}
+} );
+
+
+		
+	   //Adding a default value for font size for the RTE in Email Template builder in source and non-source mode
+	   var isConfigTypeContentBuilder = false;
+	   if (isConfigTypeContentBuilder) {
+			CKEDITOR.addCss(".cke_editable{font-size: 14px;}");
+	   }
+
+		/************************ Function Definitions ************************/
+		var ckDom;
+		var useCkEditorPanels = false;
+		var isConfigTypeKnowledgeLightning = false;
+		var isConfigTypeSfxEmail = false;
+
+		var imageObserver = null;
+
+		function getHeight() {
+			if(!ckDom) {
+				ckDom = document.getElementById('cke_editor');
+			}
+			return ckDom.getBoundingClientRect().height;
+		}
+		
+		window.onresize = function(evt) {
+			postMessage('heightChange', null, null, getHeight());
+		}
+		
+		var postMessage = function(event, value, extraInfo, newHeight) {
+			var origin = getTargetOrigin();
+			if(origin == null) return;
+
+			var msg = {
+				iframeId: id,
+				value: value,
+				extraInfo: extraInfo,
+				event: event,
+				height: (newHeight ? newHeight : getHeight())
+			};
+			parent.postMessage(msg, origin);
+		};
+		
+		var _isMacPlatform = function () {
+			return !!window.navigator.platform.match(/^Mac/);
+		};
+
+		var _launchQuickTextPanel = function(event) {
+			var value = _getCursorPosition(event);
+			postMessage('dialog', 'launchQuickTextPanel', value);
+		};
+		var _toggleQuickTextPanel = function(event) {
+			var value = _getCursorPosition(event);
+			postMessage('dialog', 'toggleQuickTextPanel', value);
+		};
+		
+		var _getCursorPosition = function (event) {
+			var ckEditorBody = document.getElementsByClassName("cke_contents")[0];
+			var ckEditorBodyHeight = ckEditorBody.offsetHeight;                
+			var value = {};  
+			var cursor = 0;
+			if(ckEditorBodyHeight) {
+				 cursor = (ckEditorBodyHeight/2) + 20;
+			} 
+			value.cursor = cursor;
+			return value;
+		};
+		
+		var setBodyContentEditable = function (editorInstance, contentEditable) {
+			// find the body, and set contenteditable
+			var doc = editorInstance.document;
+			if (doc !== undefined){
+				doc.getBody().setAttribute('contenteditable', contentEditable);
+			}
+
+			if(!contentEditable) {
+				var node = editorInstance.document.$.createElement('style');
+				node.setAttribute('data-cke-temp', '1');
+				node.id = 'custom-css';
+				node.innerHTML = 'td[contentEditable~="false"]{outline: 1px solid #ddd; ' +
+								 'background-image: url("/email/wysiwyg/images/locked.gif;");' +
+								 'background-repeat: no-repeat;' +
+								 'background-position: right top;}' +
+								 '[contentEditable~="true"]{outline: 1px dashed #222655;}' +
+								 '[contentEditable~="true"]:focus{outline-color: #1589ee }' +
+								 '[contentEditable~="true"]{\n' +        /* Set user select for unlocked region in firefox/safari due to bug*/
+								 '    -moz-user-select: text;\n' +       /* Firefox */
+								 '    -webkit-user-select: text;}' +     /* Chrome/Safari */
+								 '[contentEditable~="false"]{\n' +       /* Block user selecting in locked region */
+								 '    -webkit-touch-callout: none;\n' +  /* iOS Safari */
+								 '    -webkit-user-select: none;\n' +    /* Chrome/Safari/Opera */
+								 '    -khtml-user-select: none;\n' +     /* Konqueror */
+								 '    -moz-user-select: none;\n' +       /* Firefox */
+								 '    -ms-user-select: none;\n' +        /* Internet Explorer/Edge */
+								 '    TimeSheetTemplate   user-select: none;}' /* Non-prefixed version, currently not supported by any browser */
+				;
+				editorInstance.document.find('head').$[0].appendChild(node);
+			}
+		};
+
+		// Most browsers have a bug that if you set something as contenteditable false inside of a contenteditable
+		// true block (ie CK) then they will allow you to delete the contenteditable false block
+		var handleLockedRegions = function(editorInstance, content) {
+			//IE11 has awful support of contenteditable so we just won't support it
+			if (!!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g)) return;
+
+			//content is null or empty
+			if (!content) return;
+
+			(content.match(/(contenteditable)\s*=\s*((["'])((true)|(false))\3)(?=[^<]*>)/) == null) ?
+				setBodyContentEditable(editorInstance, true) : setBodyContentEditable(editorInstance, false);
+		};
+
+		var _setData = function(editorInstance, content) {
+			var options = {};
+			options.callback = function() {
+				if (editorInstance._nextContent && editorInstance._nextContent.length !== 0) {
+					_setData(editorInstance,editorInstance._nextContent.shift());
+				} else {
+					editorInstance._settingContent = false;
+					if (false) { // Since only EmailExp is using this feature no point in anyone else wasting the processing time
+						handleLockedRegions(editorInstance, content);
+					}
+				}
+			};
+			if (content) {
+				options.noSnapshot = true;
+			}
+			editorInstance.setData(content, options);
+		};
+
+		var getRenderedBody = function(content) {
+			/* Create a HTML document using DOMParser */
+			var doc, body;
+			try {
+				doc = new DOMParser().parseFromString(content, 'text/html');
+			} catch (e) {}
+
+			/* Some browsers throw, some browsers return null for the code above
+			DOMParser with text/html support is only in very recent browsers. */
+			if (!doc || !doc.documentElement) {
+				doc = document.implementation.createHTMLDocument('');
+				body = doc.body;
+				body.parentNode.removeChild(body.parentNode.firstElementChild);
+				body.outerHTML = content;
+			}
+
+			/* Work on whole document or just its body */
+			var bodyElements = (typeof doc.getElementsByTagName === 'function') ? doc.getElementsByTagName('body') : getElementsByTagName.call(doc,'body');
+			return bodyElements.length > 0 ? bodyElements[0].innerHTML : "";
+		};
+
+		var setContent = function(content, unfilteredContent) {
+			if (!editor) {
+				return;
+			}
+			//This code stops a cycle of setting the value and updating the content in a change handler
+			//It needs the rendered body check because sanitize html will convert some html entities or
+			//tag structure when it's sending data
+			var editorContent = editor.getData();
+			if (unfilteredContent === editorContent
+					|| unfilteredContent === cmpValue // Check this isn't an old change event (can happen if someone types quickly)
+					|| content === editorContent // Check this isn't an old change event (can happen if someone types quickly)
+					|| content === (editorContent = getRenderedBody(editorContent))
+					|| content === editorContent.replace(/(\r\n)|\n/g,'\r\n')
+					|| content === getRenderedBody(cmpValue)) {
+				return;
+			}
+			if (editor._settingContent) {
+				if (!editor._nextContent) {
+					editor._nextContent = [];
+				}
+				editor._nextContent.push(content);
+			} else {
+				editor._settingContent = true;
+				_setData(editor, content);
+			}
+		};
+		
+		var insertText = function(text) {
+			if (!editor) {
+				return;
+			}
+			if (editor._settingContent) {
+				setTimeout(function(t) {
+					insertText(t);
+				}, 100, text);
+				return; 
+			}
+			editor.insertText(text);
+		};
+					
+		var insertHtml = function(text) {
+			if (!editor) {
+				return;
+			}
+			
+			var selectionRange = editor.getSelection().getRanges();
+			if (selectionRange && selectionRange.length === 0) {
+				// If selection range is empty/undefined, cursor has never been initialized
+				setCursorAtTop();
+			}
+			
+			if (editor._settingContent) {
+				setTimeout(function(t) {
+					insertHtml(t);
+				}, 100, text);
+				return; 
+			}
+			// The autogrow plugin does not wait for images being loaded and improperly determines the size
+			// if the client area. We force resizing after each image is loaded.
+			// IE11: had to initialize on demand instead of on 'instanceReady'
+			initiateMutationObserverForImages(editor, onImageLoaded);
+			editor.insertHtml(text);
+		};
+
+		var applyContentDesignKitsStyle = function (cssStyle) {
+			editor.designkit = {'cssStyle': cssStyle};
+			var node = editor.document.$.createElement('style');
+			var doc = editor.document;
+			node.id = 'content-design-kits-style';
+			node.innerHTML = cssStyle;
+			doc.find('head').$[0].appendChild(node);
+			var isSafari = navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1;
+			if (isSafari) {
+				doc.getBody().addClass('contentbuilder-richtext');
+			} else {
+				doc.getDocumentElement().addClass('contentbuilder-richtext');
+			}
+		};
+		
+		var setCursorAtTop = function() {
+			var newRange = editor.createRange();
+			var doc = editor.document;
+			if (newRange && doc && doc.getBody()) {
+				newRange.moveToPosition(doc.getBody().getFirst(), CKEDITOR.POSITION_BEFORE_START);
+				newRange.select();
+				
+				var is_safari = navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") === -1;
+				if (is_safari) {
+					if (doc.getBody()) {
+						doc.getBody().$.scrollTop = 0;
+					}
+				} else {
+					if (doc.getDocumentElement()) {
+						doc.getDocumentElement().$.scrollTop = 0;
+					}
+				}
+			}
+		};
+
+		var timeout;
+		var waitForChanges = function() {
+			clearTimeout(timeout);
+			timeout = setTimeout(function() {
+				if(editor) {
+					cmpValue = editor.getData();
+					postMessage('change', cmpValue);
+				}
+			}, 100);
+		};
+		
+		// Function to retrieve table columns
+		function tableColumns( table ) {
+			var cols = 0,
+				maxCols = 0;
+			for ( var i = 0, row, rows = table.$.rows.length; i < rows; i++ ) {
+				row = table.$.rows[ i ], cols = 0;
+				for ( var j = 0, cell, cells = row.cells.length; j < cells; j++ ) {
+					cell = row.cells[ j ];
+					cols += cell.colSpan;
+				}
+	
+				cols > maxCols && ( maxCols = cols );
+			}
+	
+			return maxCols;
+		}
+		
+		// If value is just a number, append 'px' by default
+		function validateCssSize(cssNumber) {
+			var numberRegEx = /^\d+$/;
+			if (numberRegEx.test(cssNumber)) {
+				return cssNumber + "px";
+			}
+			return cssNumber;
+		}
+		
+		// Insert codeblock into editor
+		var handleInsertCodeBlock = function(data) {
+			var makeElement = function( name ) {
+				var element = new CKEDITOR.dom.element(name, editor.document);
+				if (true) {
+					setCodeblockStyles(element);
+				}
+				return element;
+			};
+			var codeBlock = this.selectedCodeBlock || makeElement('pre');
+			
+			var currentCursorLocation = editor.getSelection().getRanges()[0];
+			if(currentCursorLocation) {
+				var text = data.value.text;
+				var currentCodeBlock = editor.getSelection().getStartElement();
+				
+				// Edit existing code block
+				if(currentCodeBlock.hasClass('ckeditor_codeblock')) {
+					var currentCodeBlock = editor.getSelection().getStartElement();
+					currentCodeBlock.setText(text);
+				}
+				// Create new code block and delete everything been selected
+				// The last code block been covered by the selection will be truncated
+				else {
+					currentCursorLocation.deleteContents(true);
+					var text = data.value.text;
+					codeBlock.setText(text);
+					codeBlock.addClass("ckeditor_codeblock");
+					editor.insertHtml(codeBlock.getOuterHtml() + '<br>');
+				}
+			}
+			// Editor is empty now. Insert a code block.
+			else {
+				var text = data.value.text;
+				codeBlock.setText(text);
+				codeBlock.addClass("ckeditor_codeblock");
+				editor.insertElement( codeBlock );
+				editor.insertHtml('<br>');
+			}
+
+			editor.focus();
+			if(editor.container && editor.container.$) {
+				editor.container.$.scrollIntoView();
+			}
+		};
+
+		// Insert table into editor
+		var handleInsertTable = function(data) {
+			var makeElement = function( name ) {
+				return new CKEDITOR.dom.element( name, editor.document );
+			};                        
+			var selection = editor.getSelection();
+			// TODO bookmarks?
+			
+			var selectedEl = selection && selection.getSelectedElement();
+			var table = this.selectedTable || makeElement('table');
+			
+			var info = data.value;
+			if (info) {
+				// set border
+				table.setAttribute('border', info.borderSize);
+				
+				// set caption if specified, else remove captions
+				var captionElement = table.getElementsByTag( 'caption' );
+				if (info.caption) {
+					if (captionElement.count() > 0) {
+						captionElement = captionElement.getItem(0);
+						captionElement.setHtml('');
+					} else {
+						captionElement = new CKEDITOR.dom.element('caption', editor.document);
+						if ( table.getChildCount() )
+							captionElement.insertBefore( table.getFirst() );
+						else
+							captionElement.appendTo(table);
+					}
+					captionElement.append( new CKEDITOR.dom.text( info.caption, editor.document ) );
+				} else if ( captionElement && captionElement.count() > 0 ) {
+					for ( var i = captionElement.count() - 1; i >= 0; i-- )
+						captionElement.getItem( i ).remove();
+				}
+				
+				// Generate rows and cols
+				if (!this.selectedTable) {
+					var tbody = table.append(makeElement('tbody')),
+						rows = parseInt(info.rows, 10) || 0,
+						cols = parseInt(info.cols, 10) || 0;
+						
+					for ( var i = 0; i < rows; i++ ) {
+						var row = tbody.append( makeElement( 'tr' ) );
+						for ( var j = 0; j < cols; j++ ) {
+							var cell = row.append( makeElement( 'td' ) );
+							cell.appendBogus();
+						}
+					}
+				}
+				
+				// Set headers
+				modifyTableHeader(table, info);
+				
+				// Set width and height
+				info.height ? table.setStyle( 'height', validateCssSize(info.height)) : table.removeStyle( 'height' );
+				info.width ? table.setStyle( 'width', validateCssSize(info.width)) : table.removeStyle( 'width' );
+				
+				if ( !table.getAttribute( 'style' ) )
+					table.removeAttribute( 'style' );
+					
+				// Record a change was made
+				editor.fire('saveSnapshot');
+			}
+			
+			if (!this.selectedTable) {
+				editor.insertElement( table );
+				// Override the default cursor position after insertElement to place
+				// cursor inside the first cell (#7959), IE needs a while.
+				setTimeout( function() {
+					var firstCell = new CKEDITOR.dom.element( table.$.rows[ 0 ].cells[ 0 ] );
+					var range = editor.createRange();
+					range.moveToPosition( firstCell, CKEDITOR.POSITION_AFTER_START );
+					range.select();
+				}, 0 );
+			}
+			
+			// We are done with the table, so remove reference
+			this.selectedTable = null;
+			
+			if(editor.container && editor.container.$) {
+				editor.container.$.scrollIntoView();
+			}
+		};
+
+		var handleInsertLink = function(data) {
+			var content;
+			var url = data.value;
+
+			// access html element from cke element via $
+			var selection = editor.getSelectedHtml();
+			var selectedHtml = selection.$;
+
+			// when selection is not set manually, it's a docfragment
+			if (isDocFragmentNode(selectedHtml)) {
+				var linkElement = selectedHtml.querySelector('a');
+				if (linkElement) {
+					selectedHtml = linkElement;
+				}
+			}
+
+			if (isAnchorNode(selectedHtml)) {
+				// get the content without the anchor since we'll be creating a new one
+				selectedHtml.setAttribute("href", url);
+				if (selectedHtml.hasAttribute("data-cke-saved-href")) {
+					selectedHtml.setAttribute("data-cke-saved-href", url);
+				}
+				content = selectedHtml.outerHTML;
+			} else if (selectedHtml && selectedHtml.hasChildNodes()) {
+				// get a single html string of the selected elements
+				content = '<a href="' + url + '">' + selection.getHtml() + '</a> '; // trailing space is intentional
+			} else { // if no selection
+				content = '<a href="' + url + '">' + url + '</a> '; // trailing space is intentional
+			}
+
+			editor.insertHtml(content);
+		};
+		
+		var handleInsertLinkAdvanced = function(data) {
+		
+			var content = '';
+			var linkInfo = data && data.value;
+			
+			if (!linkInfo) {
+				return;
+			}
+			
+			var href = linkInfo.linkType === 'url' ? linkInfo.url : '#' + linkInfo.anchor;
+
+			// access html element from cke element via $
+			var selection = editor.getSelectedHtml();
+			var selectedHtml = selection && selection.$;
+			var selectedLink = CKEDITOR.plugins.link.getSelectedLink( editor );
+			
+			// when selection is not set manually, it's a docfragment
+			if (isDocFragmentNode(selectedHtml) && isAnchorNode(selectedHtml.firstChild)) {
+				selectedHtml = selectedHtml.firstChild;
+			}
+
+			// if selection is an anchor
+			if (selectedLink) {
+				// get the content without the link since we'll be creating a new link
+				content = selectedLink.$ && selectedLink.$.innerHTML;
+				editor.getSelection().selectElement(selectedLink);
+			// is selection is non-anchor
+			} else if (selectedHtml && selectedHtml.hasChildNodes()) {
+				var startElement = editor.getSelection().getStartElement();
+				var realElementHtml = startElement && startElement.getAttribute("data-cke-realelement");
+				
+				// if selection is a fake element (contains real element html)
+				if (realElementHtml) {
+					var realElement = CKEDITOR.dom.element.createFromHtml( unescape(realElementHtml) );
+					content = realElement.is('a') ? '' : unescape(realElementHtml);
+				}
+				else {
+					// get a single html string of the selected elements
+					content = selection.getHtml();
+				}
+			// if no selection, content will be the url/anchor
+			} else {
+				if (linkInfo) {
+					content = href;
+				}
+			}
+
+			editor.insertHtml('<a href="' + href + '">' + content + '</a> '); // trailing space is intentional
+		
+		};
+		
+		var handleInsertAnchor = function(data) {
+			var content;
+
+			// access html element from cke element via $
+			var selection = editor.getSelectedHtml();
+			var selectedHtml = selection && selection.$;
+			var selectedAnchor = CKEDITOR.plugins.link.getSelectedLink( editor );
+			
+			// when selection is not set manually, it's a docfragment
+			if (isDocFragmentNode(selectedHtml) && isAnchorNode(selectedHtml.firstChild)) {
+				selectedHtml = selectedHtml.firstChild;
+			}
+
+			// if selection is an anchor
+			if (selectedAnchor) {
+				// get the content without the anchor since we'll be creating a new one
+				content = selectedAnchor.$ && selectedAnchor.$.innerHTML;
+				editor.getSelection().selectElement(selectedAnchor);
+			// is selection is non-anchor
+			} else if (selectedHtml && selectedHtml.hasChildNodes()) {
+				var startElement = editor.getSelection().getStartElement();
+				var realElementHtml = startElement && startElement.getAttribute("data-cke-realelement");
+				
+				// if selection is a fake element (contains real element html)
+				if (realElementHtml) {
+					var realElement = CKEDITOR.dom.element.createFromHtml( unescape(realElementHtml) );
+					content = realElement.is('a') ? '' : unescape(realElementHtml);
+				}
+				else {
+					// get a single html string of the selected elements
+					content = selection.getHtml();
+				}
+			// if no selection
+			} else {
+				content = '';
+			}
+
+			editor.insertHtml('<a name="' + data.value + '" id="' + data.value + '">' + content + '</a> '); // trailing space is intentional
+		};
+		
+		var postMessageForExistingIframe = function(evt) {
+			var selection = evt && evt.editor && evt.editor.getSelection(),
+							ranges = selection.getRanges(),
+							iframe,
+							selected = selection.getSelectedElement();
+		   
+			if (selected != null || selected != undefined) {
+				if (selected.getAttribute('class') === 'cke_iframe') {
+					iframe = selected;
+					
+					iframe = unescape(iframe.getAttribute('data-cke-realelement'));
+					postMessage('dialog', 'sfdcMediaEmbed', iframe);
+				}
+				else if ( ranges.length > 0 ) {
+					if ( CKEDITOR.env.webkit )
+						ranges[ 0 ].shrink( CKEDITOR.NODE_ELEMENT );
+	
+				 
+					iframe = editor.elementPath( ranges[ 0 ].getCommonAncestor( true ) ).contains( 'img', 1 )
+				}
+				iframe = unescape(iframe.getAttribute('data-cke-realelement'));
+				postMessage('dialog', 'sfdcMediaEmbed', iframe);
+			}                
+			else {
+				postMessage('dialog', 'sfdcMediaEmbed');
+			}
+		};
+		
+		var postMessageForExistingSmartLink = function(evt, existingData) {
+			if(existingData) {
+				// Edit existing smart link
+				postMessage('dialog', 'sfdcSmartLink', existingData);
+			}
+			else {
+				postMessage('dialog', 'sfdcSmartLink');
+			}
+		};
+		
+		var checkIfCursorOnSmartLink = function() {
+			var currentCursorLocation = editor.getSelection().getRanges()[0];
+			if(currentCursorLocation) {
+				//cursor is inside editor
+				var currentSmartLink = editor.getSelection().getStartElement();
+				var smartLinkPrefix = "/articles/";
+				var articleUrl = currentSmartLink.$.dataset.ckeSavedHref;
+				if (articleUrl && articleUrl.indexOf(smartLinkPrefix) !== -1) {
+					//when cursor is inside editor and on existing smartlink and 
+					//clicking smartlink plugin from toolbar
+					//Select the smartlink range for existing smartlink
+					var smartLinkElement = getEnclosingNode(currentSmartLink, 'a');
+					if (smartLinkElement) {
+						var selectedElement = editor.getSelection().getSelectedElement();
+						if (!(selectedElement && selectedElement.$ === smartLinkElement.$)) {
+							selectCkeElement(editor, smartLinkElement);
+						}
+					}
+					
+					var smartlinkTarget = getUnescapedValue(currentSmartLink, "target");
+					var lightningTarget = getUnescapedValue(currentSmartLink, "data-lightning-target");
+
+					return {target:smartlinkTarget, articleUrl:articleUrl,lightningTarget:lightningTarget};
+				}
+				else {
+					//when cursor is inside editor but not on existing smartlink
+					//articleUrl is undefined in this case
+					return null;
+				}
+			} else {
+				//when cursor is not inside the editor and clicking sfdcsmartlink
+				//from editor toolbart
+				return null;
+			}
+			
+		};
+
+		var postMessageForSfdcImage = function(existingData) {
+			if(existingData) {
+				// Edit existing image
+				postMessage('dialog', 'sfdcImage', existingData);
+			}
+			else {
+				postMessage('dialog', 'sfdcImage');
+			}
+		}
+
+		var checkIfCursorOnSfdcImage = function() {
+			var currentCursorLocation = editor.getSelection().getRanges()[0];
+			if (!currentCursorLocation) return;
+
+			var currSfdcImage = editor.getSelection().getStartElement();
+			if (currSfdcImage && currSfdcImage.is('img')) {
+				// Check if the img src contains any string that indicates it is a Salesforce image
+				var checkedArray = isSfdcImageUrl(currSfdcImage.getAttribute('src'));
+				if (checkedArray.length > 0) {
+					return {
+						alt: currSfdcImage.getAttribute('alt'),
+						isUpdate: true
+					};
+				}
+			}
+		}
+
+		var isSfdcImageUrl = function(url) {
+			// Check if the img src contains any string that indicates it is a Salesforce image
+			var sfdcImageUrls = ["/sfc/servlet.shepherd/version/download/", "/servlet/rtaImage?", "/servlet/servlet.FileDownload?"];
+			var checkedArray = sfdcImageUrls.filter(function(sfdcImageUrl) {
+				return this && this.indexOf(sfdcImageUrl) != -1;
+			}, url);
+
+			return checkedArray
+		}
+
+		
+		var getUnescapedValue = function(element, attr) {
+			var escapedValue = element.$.getAttribute(attr);
+			var unescapedValue = "";
+			if (typeof escapedValue !== 'undefined' && escapedValue !== null) {
+				 unescapedValue = unescape(escapedValue);
+			}
+			return unescapedValue;
+		};
+		
+		var postMessageForExistingLinkAdvanced = function(evt) {
+			var selection = evt && evt.editor && evt.editor.getSelection(),
+				selected = selection.getStartElement();
+				
+			var anchorsList = CKEDITOR.plugins.link.getEditorAnchors( evt.editor );
+			var href, linkType;
+
+			// check if we have any element selected and if it is a link
+			if (selected && selected.is('a')) {
+				href = selected.getAttribute('href');
+				// if modifying existing link, pass its href value to the dialog
+				if (href) {
+					postMessage('dialog', 'linkAdvanced', {url: href, anchorsList: anchorsList});
+					return;
+				}
+			}
+			
+			// in all other cases, we are creating a new link
+			postMessage('dialog', 'linkAdvanced', {linkType:'url', anchorsList: anchorsList});
+		};
+		
+		var postMessageForExistingAnchor = function(evt) {
+			var selection = evt && evt.editor && evt.editor.getSelection(),
+				ranges = selection.getRanges(),
+				linkId = '',
+				selected = selection.getStartElement();
+
+			// If selected is a fake element (e.g. image of anchor), pull out real element
+			if (selected && selected.is('img')) {
+				var realElementHtml = selected.getAttribute("data-cke-realelement");
+				if (realElementHtml) {
+					selected = CKEDITOR.dom.element.createFromHtml( unescape(realElementHtml) );   
+				}
+			}
+			
+			if (selected && selected.is('a')) {
+				var name = selected.getAttribute('name');
+				var id = selected.getAttribute('id');
+				linkId = id ? id : name;
+			}
+
+			postMessage('dialog', 'anchor', {linkId: linkId});
+		};
+		
+		var postMessageForExistingCodeBlock = function(evt) {
+			var currentCursorLocation = editor.getSelection().getRanges()[0];
+			if(currentCursorLocation) {
+				var currentCodeBlock = editor.getSelection().getStartElement();
+				// Edit existing code block
+				if(currentCodeBlock.hasClass('ckeditor_codeblock')) {
+					var currentCodeBlock = editor.getSelection().getStartElement();
+					var text = currentCodeBlock.getText();
+					var existingCodeBlockInfo = {textContent : text};
+					postMessage('dialog', 'sfdcCodeBlock', existingCodeBlockInfo);
+				}
+				// Create new code block and delete everything been selected
+				// The last code block been covered by the selection will be truncated
+				else {
+					postMessage('dialog', 'sfdcCodeBlock');
+				}
+			}
+			else {
+				postMessage('dialog', 'sfdcCodeBlock');
+			}
+		};
+		
+		// Communicate existing table properties to iframeComposer 
+		var postMessageForExistingTable = function(evt) {
+			var selection = evt && evt.editor && evt.editor.getSelection(),
+							ranges = selection.getRanges(),
+							table,
+							selected = selection.getSelectedElement();
+							
+			if ( selected && selected.is( 'table' ) )
+				table = selected;
+			else if ( ranges.length > 0 ) {
+				// Webkit could report the following range on cell selection (#4948):
+				// <table><tr><td>[&nbsp;</td></tr></table>]
+				if ( CKEDITOR.env.webkit )
+					ranges[ 0 ].shrink( CKEDITOR.NODE_ELEMENT );
+
+				table = editor.elementPath( ranges[ 0 ].getCommonAncestor( true ) ).contains( 'table', 1 );
+			}
+			
+			// Check for headers
+			var headerValue = "";
+			table.hasColumnHeaders = true;
+
+			// Check if all the first cells in every row are TH
+			for ( var row = 0; row < table.$.rows.length; row++ ) {
+				// If just one cell isn't a TH then it isn't a header column
+				var headCell = table.$.rows[ row ].cells[ 0 ];
+				if ( headCell && headCell.nodeName.toLowerCase() != 'th' ) {
+					table.hasColumnHeaders = false;
+					break;
+				}
+			}
+			// Check if the table contains <thead>.
+			if ( ( table.$.tHead !== null ) )
+				headerValue = table.hasColumnHeaders ? 'both' : 'row';
+			else
+				headerValue = table.hasColumnHeaders ? 'col' : '';
+
+			// Check for captions
+			var nodeList = table.getElementsByTag( 'caption' ),
+				captionText;
+			if ( nodeList.count() > 0 ) {
+				var caption = nodeList.getItem( 0 );
+				var firstElementChild = caption.getFirst( CKEDITOR.dom.walker.nodeType( CKEDITOR.NODE_ELEMENT ) );
+
+				if ( firstElementChild && !firstElementChild.equals( caption.getBogus() ) ) {
+					this.disable();
+					captionText = caption.getText();
+					return;
+				}
+
+				captionText = CKEDITOR.tools.trim( caption.getText() );
+			}
+
+			// Store this table reference
+			this.selectedTable = table;
+
+			// Populate table info to be passed into createTablePanel
+			var tableInfo = {rows : table.$.rows.length,
+							 cols : tableColumns(table),
+							 width : table.getStyle('width'),
+							 height : table.getStyle('height'),
+							 headers : headerValue,
+							 borderSize : table.getAttribute('border') || '',
+							 caption : captionText,
+							 isExistingTable: true};
+							 
+			postMessage('dialog', evt.data.name, tableInfo);
+		};
+		
+		// Handle adding/changing header row/col/both
+		var modifyTableHeader = function(table, info) {
+			// Modify the table headers. Depends on having rows and cols generated
+			// correctly so it can't be done in commit functions.
+
+			// Make <thead> if needed
+			var headers = info.headers;
+			if ( !table.$.tHead && ( headers == 'row' || headers == 'both' ) ) {
+				var thead = new CKEDITOR.dom.element( table.$.createTHead() );
+				tbody = table.getElementsByTag( 'tbody' ).getItem( 0 );
+				var theRow = tbody.getElementsByTag( 'tr' ).getItem( 0 );
+
+				// Change TD to TH:
+				for ( i = 0; i < theRow.getChildCount(); i++ ) {
+					var th = theRow.getChild( i );
+					// Skip bookmark nodes. (#6155)
+					if ( th.type == CKEDITOR.NODE_ELEMENT && !th.data( 'cke-bookmark' ) ) {
+						th.renameNode( 'th' );
+						th.setAttribute( 'scope', 'col' );
+					}
+				}
+				thead.append( theRow.remove() );
+			}
+
+			if ( table.$.tHead !== null && !( headers == 'row' || headers == 'both' ) ) {
+				// Move the row out of the THead and put it in the TBody:
+				thead = new CKEDITOR.dom.element( table.$.tHead );
+				tbody = table.getElementsByTag( 'tbody' ).getItem( 0 );
+
+				var previousFirstRow = tbody.getFirst();
+				while ( thead.getChildCount() > 0 ) {
+					theRow = thead.getFirst();
+					for ( i = 0; i < theRow.getChildCount(); i++ ) {
+						var newCell = theRow.getChild( i );
+						if ( newCell.type == CKEDITOR.NODE_ELEMENT ) {
+							newCell.renameNode( 'td' );
+							newCell.removeAttribute( 'scope' );
+						}
+					}
+					theRow.insertBefore( previousFirstRow );
+				}
+				thead.remove();
+			}
+
+			// Should we make all first cells in a row TH?
+			if ( !table.hasColumnHeaders && ( headers == 'col' || headers == 'both' ) ) {
+				for ( row = 0; row < table.$.rows.length; row++ ) {
+					newCell = new CKEDITOR.dom.element( table.$.rows[ row ].cells[ 0 ] );
+					newCell.renameNode( 'th' );
+					newCell.setAttribute( 'scope', 'row' );
+				}
+			}
+
+			// Should we make all first TH-cells in a row make TD? If 'yes' we do it the other way round :-)
+			if ( ( table.hasColumnHeaders ) && !( headers == 'col' || headers == 'both' ) ) {
+				for ( i = 0; i < table.$.rows.length; i++ ) {
+					row = new CKEDITOR.dom.element( table.$.rows[ i ] );
+					if ( row.getParent().getName() == 'tbody' ) {
+						newCell = new CKEDITOR.dom.element( row.$.cells[ 0 ] );
+						newCell.renameNode( 'td' );
+						newCell.removeAttribute( 'scope' );
+					}
+				}
+			}
+		};
+		
+		function getEnclosingNode(node, type) {
+			var currentNode = node;
+			while(currentNode && !currentNode.is('body')) {
+				if (currentNode.is(type)) {
+					return currentNode;
+				}
+				currentNode = currentNode.getParent();
+			}
+			return null;
+		}
+		
+		function makeLinkHtml(url, content) {
+			return '<a href="' + url + '">' + content + '</a>';
+		}
+		
+		function selectCkeElement(editor, element) {
+			var range = editor.createRange();
+			range.selectNodeContents(element);
+			range.select();
+		}
+		
+		function isAnchorNode(node) {
+			return node && node.nodeType === Node.ELEMENT_NODE && node.tagName.toUpperCase() === 'A';
+		}
+
+		/**
+		 * check whether anchor element is editable based on contenteditable of itself or any of its ancestor
+		 * should be called only on double click event in email and list email composer
+		 */
+		function isAnchorEditableInEmailComposer(anchorElement) {
+			if (!anchorElement || anchorElement.length == 0) {
+				return false;
+			}
+
+			var element = anchorElement;
+			do {
+				if (element.hasAttribute('contenteditable')) {
+					var attrValue = element.getAttribute('contenteditable');
+					// stop only in the following two scenarios
+					if (attrValue && (attrValue.toLowerCase() === 'true' || attrValue === '')) {
+						// scenario 1: stop and return true if element has contenteditable="true" or empty value
+						// refer to https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes#attr-contenteditable
+						return true;
+					} else if (attrValue && attrValue.toLowerCase() === 'false') {
+						// scenario 2: stop and return false if element has contenteditable="false"
+						return false;
+					}
+				}
+
+				element = element.parentNode;
+			} while (element != null && element.nodeType === 1);
+
+			return false;
+		}
+
+		function isDocFragmentNode(node) {
+			return node && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+		}
+
+		function initiateMutationObserverForImages(editor, onImageLoadedCallback) {
+			if (imageObserver) {
+				return; // only once
+			}
+			imageObserver = new MutationObserver(function mutationObserverCallback(mutations) {
+				mutations.forEach(function (mutation) {
+					if (mutation.type === 'childList') {
+						for (var i=0; i <  mutation.addedNodes.length; ++i) {
+							var node = mutation.addedNodes[i];
+							if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'IMG') {
+								if (node.complete) {
+									onImageLoadedCallback(); // call the callback immediately
+								} else {
+									node.onload = onImageLoadedCallback;
+								}
+							}
+						}
+					}
+				});
+			});
+
+			imageObserver.observe(editor.document.$, {childList:true, subtree:true});
+		}
+
+		function onImageLoaded() {
+			// Force editor content area resize after image was loaded and its size becomes available.
+			editor.forceNextSelectionCheck();
+			editor.selectionChange( 1 );
+		}
+
+		/************************ Event handling ************************/
+		var cmpValue = "";
+		var KEY_COMBO_BUFFER_RESET_WAIT_TIME = 2000;
+		var previousKeyboardEventTimestamp;
+
+		editor.on('change', function() {
+			if(cmpValue !== editor.getData()) {
+				// Wait for the user to stop typing
+				waitForChanges();
+			}
+		});
+		
+		editor.on('dataReady', function() {
+			if(cmpValue !== editor.getData()) {
+				waitForChanges();
+			}
+		});
+		editor.on('instanceDestroyed', function() {
+				console.error("Destroyed");
+		});
+		 
+		
+		// Listen for changes made in source mode
+		editor.on('mode', function() {
+			if (this.mode === 'source' && false) {
+				var editable = editor.editable();
+				editable.attachListener(editable, 'input', function() {
+					// Handle changes made in the source mode.
+					if(cmpValue !== editor.getData()) {
+						waitForChanges();
+					}
+				});
+			}
+
+			if (this.mode === 'wysiwyg' && false) {
+				// apply designkit custom css style
+				if(editor.designkit && editor.designkit.cssStyle) {
+					applyContentDesignKitsStyle(editor.designkit.cssStyle);
+				}
+			}
+		});
+
+		editor.on('key', function(event) {
+			var domEvent = event.data.domEvent;
+			if(domEvent.$.type === 'keydown' && (_isMacPlatform() ? domEvent.$.metaKey : domEvent.$.ctrlKey) && domEvent.getKey() === 190) {
+				var currentTimestamp = Date.now();
+				if(previousKeyboardEventTimestamp) {
+					if((currentTimestamp - previousKeyboardEventTimestamp) >= KEY_COMBO_BUFFER_RESET_WAIT_TIME) {
+						_launchQuickTextPanel(event);
+					}             
+				} else {
+					//this is to address case when quick text panel is invoked for first time
+					_launchQuickTextPanel(event);
+				}
+				previousKeyboardEventTimestamp = currentTimestamp;
+			}else if(domEvent.$.type === 'keydown' && editor.document.getElementsByTag('pre').$.length >= 1 && editor.document.getElementsByTag('pre').$[0].innerText === '\n' && (domEvent.getKey() === 8 || domEvent.getKey() === 46)){
+				editor.document.getElementsByTag('pre').$[0].remove(0)
+			}
+		});
+		
+		
+		editor.on('blur', function() {
+			if(cmpValue !== editor.getData()) {
+				postMessage('change', editor.getData());
+			}
+		});
+
+		editor.on('instanceReady', function() {               
+			postMessage('loaded', true);
+
+			// CKeditor doesn't see changes if (native browser) spell checker correction occured.
+			// As a result, there're customer cases W-4903852
+			// Solving it with Mutation Observer. The callback, `waitForChanges`, is a debounced function,
+			// So the change is not fired twice. 
+			initiateMutationObserverForCharacterData(editor, waitForChanges);
+		});
+		
+		editor.on('contentDom', function () {
+			//Click listener is added to close panel if user clicks in somewhere text area or clicks on toolbar
+			//Because if quickText panel supports closing on clickOut hence need to add seperate listener for ckeditor
+			
+			//Need to add seperate handler for ckeditor toolbar as adding listener only on container does not work 
+			//as there is seperate iframe inside ckeditor instance for text area
+			var editorElement = editor.container;
+			editorElement.on('click', function () {
+				postMessage('clickAction', true);
+			});
+			
+			// Clicking on the QT toolbar button itself shouldn't invoke events that cause it to go away
+			var qtToolbarButton = editor.container.find("a.cke_button__sfdcquicktext");
+			if (qtToolbarButton.count() > 0) {
+				qtToolbarButton.getItem(0).on('click', function(event) {
+					event.data.preventDefault();
+					event.data.stopPropagation();
+					return false;
+				});
+			}
+			
+			//Need to add seperate handler for ckeidtor richTextArea
+			editor.document.$.addEventListener('click', function(){
+				postMessage('clickAction', true);
+			})
+			
+			editor.document.$.addEventListener('drop', function(e){
+				// Using native files causes security issues in Chrome. Cloning and replacing with new set of File objects
+				var files = [];
+				for (var i = 0; i < e.dataTransfer.files.length; i++) {
+					var file = e.dataTransfer.files[i];
+					files.push(new File( [ file.slice( 0, file.size ) ], file.name, { type: file.type } ));
+				}
+				postMessage('drop', files);
+				return true;
+			})
+			
+			editor.document.$.addEventListener('dragover', function(e){
+				var data = e.dataTransfer;
+				var dataTypes;
+				if(data && data.types) {
+					// For Edge the dataTransfer.types is an object
+						 if(!data.types instanceof Array) {
+							dataTypes = Object.values(data.types);
+						 }  else {
+								// For all other browsers dataTransfer.types is an array
+								dataTypes = data.types;
+						 }
+				}
+				if(dataTypes && dataTypes.indexOf ? dataTypes.indexOf('Files') != -1 : dataTypes.contains('Files')) {
+					postMessage('dragover',  JSON.parse(JSON.stringify(data)));
+				}
+				return true;
+			})
+			
+			editor.document.$.addEventListener('dragleave', function(e){
+				var data = e.dataTransfer;
+				postMessage('dragleave',  JSON.parse(JSON.stringify(data)));
+				return true;
+			})
+			
+		});
+		
+		editor.on('autoGrow', function(evt) {
+			var toolbarHeight = getHeight() - evt.data.currentHeight;
+			postMessage('heightChange', null, null, evt.data.newHeight + toolbarHeight); // Update the height since autogrow is triggering
+		});
+
+		editor.on('beforeCommandExec', function ( evt ) {
+			// IE11 only has basic set support so map it is :(
+			var externalEvt = {
+				'sfdcImage': !useCkEditorPanels,
+				'table': true,
+				'tableProperties': true,
+				'link': !useCkEditorPanels,
+				'iframe': true,
+				'sfdcMediaEmbed': true,
+				'sfdcCodeBlock': true,
+				'insertsfdcSmartLink':!useCkEditorPanels,
+				'anchor': !useCkEditorPanels,
+				'sfdcImageMenuImage': true,
+				'sfdcImageMenuLink': true,
+				'insertQuickText' : true,
+				'sfdcImageMenuCms': true
+			};
+			if(evt.data && externalEvt[evt.data.name]) {
+				evt.cancel();
+				if (evt.data.name === "tableProperties") {
+					postMessageForExistingTable(evt);
+				} 
+				else if (evt.data.name === "iframe" || evt.data.name === "sfdcMediaEmbed") {
+					postMessageForExistingIframe(evt);
+				} else if(evt.data.name === "sfdcCodeBlock") {
+					postMessageForExistingCodeBlock('dialog');
+				} else if(evt.data.name === "insertsfdcSmartLink") {
+					 postMessageForExistingSmartLink('dialog', checkIfCursorOnSmartLink());
+				} else if(evt.data.name === 'anchor') {
+					postMessageForExistingAnchor(evt);
+				} else if(evt.data.name === "sfdcImageMenuImage") {
+					postMessage('dialog', 'sfdcImage');
+				} else if (evt.data.name === 'insertQuickText') {
+					_toggleQuickTextPanel(evt);
+				} else if(evt.data.name === 'link') {
+					if (isConfigTypeKnowledgeLightning) {
+						postMessageForExistingLinkAdvanced(evt);
+						
+					} else {
+						postMessage('dialog', 'link');
+					}
+				} else if(evt.data.name === "sfdcImageMenuLink") {
+					postMessage('dialog', 'sfdcImageViaUrl');
+				} else if(evt.data.name === "sfdcImageMenuCms") {
+					postMessage('dialog', 'sfdcImageViaCms');
+				} else if (evt.data.name == "sfdcImage") {
+					postMessageForSfdcImage(checkIfCursorOnSfdcImage());
+				} else {
+					postMessage('dialog', evt.data.name);
+				}
+				return false;
+			}
+			return true;
+		});
+		
+		editor.on('paste', function (evt) {
+			// clipboard paste is supported on Lightning Case Email publishers, lightning Knowledge RTA field. 
+			var isConfigCaseLightning = true;
+			var isConfigTypeKnowledgeLightning = false;
+			var isConfigTypeSfxEmail = false;
+			var isConfigTypeEmailTemplate = false;
+			var isConfigTypeContentBuilder = false;
+
+			var clipboardData = evt.data;
+			var dataTransfer = clipboardData.dataTransfer;
+			// To preserve the table styling, we need to get the native html cache data
+			if (isConfigTypeSfxEmail && dataTransfer && dataTransfer._ && dataTransfer._.nativeHtmlCache) {
+				// For content builder we need to remove the meta tag from native Html Cache
+				// as Chrome adds meta tag that is not stripped out in the plugin
+				if (isConfigTypeContentBuilder && dataTransfer._.nativeHtmlCache) {
+					dataTransfer._.nativeHtmlCache = dataTransfer._.nativeHtmlCache.replace( dataTransfer._.metaRegExp, '' );
+				}
+			}
+			if (isConfigTypeEmailTemplate && hasImagesData(clipboardData)) {
+				evt.cancel();
+				postMessage("showError", "pasteImageNotSupported");
+				return;
+
+			}
+
+			if (!(isConfigCaseLightning || isConfigTypeKnowledgeLightning || isConfigTypeSfxEmail)) {
+				return;
+			}
+			// 'paste' event may mean drag and drop. Limiting to only paste method
+			if (!clipboardData || !clipboardData.method || clipboardData.method !== 'paste') {
+				return;
+			}
+
+			if (isConfigTypeSfxEmail) {
+				pasteForSfx(clipboardData, evt);
+				return;
+			}
+
+			// Paste for Case or Knowledge
+
+			var filesData = [];
+			// Check for single image. Case does not extract files if dataValue exists and has multiple images.
+			if (!clipboardData.dataValue || clipboardData.dataValue.match(/^<img\s[^>]+(\/>|><\/img>)$/)) {
+				// on Chrome & Firefox, there's a file object array inside the clipboard data
+				filesData = getClipboardFiles(clipboardData);
+			}
+			if (filesData.length == 0) {
+				// on other browsers, IE11 and Safari, there's a blob object inside the clipboard data
+				var blobData = getClipboardBlob(clipboardData);
+				if (blobData != null) {
+					evt.cancel();
+					postMessage('pasteImages', blobData);
+				}
+			} else {
+				evt.cancel();
+				postMessage('pasteImages', filesData);
+			}
+		});
+
+		// Processing the paste for SFX. Extract and upload File object images or first blob URL image
+		function pasteForSfx(clipboardData, evt) {
+			var dataValue = clipboardData.dataValue;
+			if (allImagesAreVisibleOnServer(dataValue)) {
+				evt.cancel();
+				postMessage('pasteImages', dataValue , {options:'setMaxWidth'});
+				return;
+			}
+
+			// Check whether clipboard has image files as File objects.
+			var filesData = getClipboardFiles(clipboardData);
+			/**
+			 * Guarding against following edge cases:
+			 *      1. Copy and pasting contents from Microsoft Word for Mac can have a html
+			 *         markup and a file that is basically a screenshot of the contents that was
+			 *         copied.  In this case don't bother processing the files.
+			 *      2. Copy and pasting an image from Safari will have text content and a file.
+			 *         The text content is a url, but what we want is the image.  So process
+			 *         files with content type is not html.
+			**/
+			if (filesData.length > 0 && !(dataValue && clipboardData.type === 'html')) {
+				evt.cancel();
+				postMessage('pasteImages', filesData);
+				return;
+			}
+
+			// We do not support blob: URLs without accompanying dataTransfer blob objects.
+			var imageData = dataValue.match(/<img.+src="(blob:[^"]+)"/);
+			if (imageData) {
+				evt.cancel();
+				postMessage("showError", "pasteNotSupportedForThisImage");
+			}
+		}
+
+		// Returns true if dataValue member of the clipboard contain <img> tags and the images can be processed on the server
+		// (i.e. no blob URLs).
+		function allImagesAreVisibleOnServer(dataValue) {
+			if (!dataValue) {
+				return false; // dataValue is empty
+			}
+			if (!dataValue.match(/<img\s[^>]+(\/>|><\/img>)/)) {
+				return false; // dataValue has no images. Maybe plain text or other data.
+			}
+			if (dataValue.match(/<img.+src="blob:/)) {
+				return false; // dataValue has at least one blob url image
+			}
+			return true;
+		}
+
+		function hasImagesData(clipboardData) {
+			if (clipboardData) {
+				var dataValue = clipboardData.dataValue;
+				if (dataValue) {
+					return dataValue.match(/<img\s[^>]+(\/>|><\/img>)/);
+				}
+
+				var dataTransfer = clipboardData.dataTransfer;
+				var filesCount = dataTransfer.getFilesCount();
+				var supportedTypes = /image\/(jpeg|jpg|png|gif|bmp)/;
+				var i;
+				for ( i = 0; i < filesCount; i++ ) {
+					var file = dataTransfer.getFile(i);
+					if (file.type.match( supportedTypes )) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		// Returns an array of file objects, or an empty array if no image files were found in the clipboard
+		function getClipboardFiles(clipboardData) {
+				var dataTransfer = clipboardData.dataTransfer;
+				var filesCount = dataTransfer.getFilesCount();
+				var files = [];
+				var supportedTypes = /image\/(jpeg|jpg|png|gif|bmp)/;
+				for ( i = 0; i < filesCount; i++ ) {
+					var file = dataTransfer.getFile(i);
+					if (!!file.type.match( supportedTypes )) {
+						files.push(file);
+					}
+				}
+				if (files.length !== filesCount) {
+				   return [];
+				}
+				return files;
+		}
+		
+		function getClipboardBlob(clipboardData) {
+				var dataValue = clipboardData.dataValue;
+				if (dataValue) {
+					// try to capture data url (i.e. IE11)
+					var imageData = dataValue.match(/^<img.+src="(data:\S*;base64,[^"]+)"/);
+					if (!imageData) {
+						// try to capture object url (i.e. Safari)
+						imageData = dataValue.match(/^<img.+src="(blob:[^"]+)"/);
+						if (imageData) {
+							// XHR to download blob link as binary
+							uploadUsingObjectUrl(imageData[1]);
+							return null;
+						}
+					} else if (imageData && imageData.length === 2) {
+						return imageData[1];
+					}
+				} 
+		}
+		
+		function uploadUsingObjectUrl(objectUrl) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', objectUrl, true);
+				xhr.responseType = 'blob';
+				xhr.overrideMimeType('image/png');
+				xhr.onload = function() {
+					if (xhr.status === 200) {
+						var blob = xhr.response;
+						blobToDataURL(blob, function(dataurl) {
+							postMessage('pasteImages', dataurl);
+						});
+					} // TODO: else, show an error toast
+				};
+				xhr.send();
+			}
+			
+		function blobToDataURL(blob, callback) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				callback(e.target.result);
+			}
+			reader.readAsDataURL(blob);
+		}
+
+		if (!useCkEditorPanels) {
+			editor.on('doubleclick', function( evt ) {
+				var realElement = evt.data.element;
+				var element = evt.data.element;
+				var elementType = element && element.getAttribute("data-cke-real-element-type");
+
+				// handles the fake anchor placeholder
+				if (elementType && elementType == "anchor") {
+					var anchorHtml = unescape(element.getAttribute("data-cke-realelement") || '');
+					element = CKEDITOR.dom.element.createFromHtml( anchorHtml );
+				}
+				
+				var anchorElement = getEnclosingNode(element, 'a');
+				
+				// Check if the element is an img first so that the proper dialogs appear
+				if (element.is('img')) {
+					if (element.$.className == 'cke_iframe') {
+						// Stop the iframe dialog from appearing
+						evt.data.dialog = '';
+						var iframe = element.$.getAttribute('data-cke-realelement');
+						postMessage('dialog', 'sfdcMediaEmbed', unescape(iframe));
+					}
+					else {
+						// Stop the link dialog from appearing
+						evt.data.dialog = '';
+						if(true) {
+							// Check if the img src contains any string that indicates it is a Salesforce image
+							var checkedArray = isSfdcImageUrl(element.getAttribute('src'));
+							if (checkedArray.length > 0) {
+								postMessage('dialog', 'sfdcImage', {href: element.getAttribute('href'), alt: element.getAttribute('alt'), isUpdate: true});
+							} else {
+								postMessage('dialog', 'sfdcImageViaUrl', {src:element.getAttribute('src'), title:element.getAttribute('title')});
+							}
+						}
+					}
+				   
+				}
+				else if (anchorElement) {
+					// make sure selection only contains the anchor
+					// this will have side effect of splitting the old link into empty anchors
+					// when inserting new link, but cke will remove them eventually
+					var selectedElement = editor.getSelection().getSelectedElement();
+					if (!(selectedElement && selectedElement.$ === anchorElement.$)) {
+						selectCkeElement(editor, realElement);
+					}
+					// Stop the link dialog from appearing 
+					evt.data.dialog = '';
+					var smartLinkPrefix = "/articles/";
+					var articleUrl = element.$.getAttribute("data-cke-saved-href");
+					var linkId = (element.$ && element.$.getAttribute("id")) || (selectedElement && selectedElement.getAttribute("id"));
+					var linkName = (element.$ && element.$.getAttribute("name")) || (selectedElement && selectedElement.getAttribute("id"));
+					var anchorName = linkId || linkName || '';
+					
+					if (articleUrl && articleUrl.indexOf(smartLinkPrefix) !== -1) {
+						//to avoid propogating the event so that old aloha smartlink is not shown
+						evt.cancel();
+						
+						var smartlinkTarget = getUnescapedValue(element, "target");
+						var lightningTarget = getUnescapedValue(element, "data-lightning-target");
+
+						var existingData = {target:smartlinkTarget, articleUrl:articleUrl, lightningTarget:lightningTarget};
+						postMessageForExistingSmartLink('dialog', existingData);
+					} else if (articleUrl) {
+						if (isConfigTypeKnowledgeLightning) {
+						var anchorsList = CKEDITOR.plugins.link.getEditorAnchors( editor );
+							postMessage('dialog', 'linkAdvanced', {url: anchorElement.getAttribute('href'), anchorsList: anchorsList});
+						} else if (isConfigTypeSfxEmail) {
+							// link dialog appears in email or list email composer
+							// only if the anchor or any of its ancestor is contenteditable
+							if (isAnchorEditableInEmailComposer(anchorElement.$)) {
+								postMessage('dialog', 'link', anchorElement.getAttribute('href'));
+							}
+						} else {
+							postMessage('dialog', 'link', anchorElement.getAttribute('href'));
+						}
+					} else if (anchorName) {
+						postMessage('dialog', 'anchor', {linkId : anchorName});
+					}
+				}
+				else if (element.is('body')) {
+					// don't show any dialog if we doubleclick the body
+					evt.data.dialog = '';
+				}
+			},null,null,100);
+		} else {
+			if (false) {
+				// With autosize on, the CkEditor dialogs (e.g. to insert inline images)
+				// move down to the middle of the Editor. If Editor is long, the dialog is way down
+				// and not visible immediately. User has to scroll down.
+				// This change moves the dialog to the top center irrespective of the height of the editor.
+				CKEDITOR.on('dialogDefinition', function(e) {
+					var dialogName = e.data.name;
+					var dialog = e.data.definition.dialog;
+					dialog.on('show', function () {
+						this.move(this.getPosition().x, 50); // Top center
+						this._.moved = 1;
+					});
+				})
+			}
+		}
+		
+		window.onmessage = function(e) {
+			if (!verifyOrigin(e.origin)) return;
+			var data = e.data;
+			var event = data.event;
+			switch(event) {
+				case "set":
+					setContent(data.value, data.unsanitizedValue);
+					cmpValue = data.unsanitizedValue;
+					break;
+				case "insertText":
+					insertText(data.value);
+					break;
+				case "insertHtml":
+					insertHtml(data.value);
+					break;
+				case "applyContentDesignKitsStyle":
+					applyContentDesignKitsStyle(data.value);
+					break;
+				case "insertLink":
+					handleInsertLink(data);
+					break;
+				case "insertLinkAdvanced":
+					handleInsertLinkAdvanced(data);
+					break;
+				case "insertAnchor":
+					handleInsertAnchor(data);
+					break;
+				case "insertTable":
+					handleInsertTable(data);
+					break;
+				case "sfdcCodeBlock":
+					handleInsertCodeBlock(data);
+					break;
+				case "sfdcImage":
+						if (!data.value.updateDescriptionOnly) {
+							var html = "<img src=\"" + data.value.src + "\" alt=\"" + data.value.alt + "\">";
+							editor.insertHtml(html);
+						} else {
+							var currentCursorLocation = editor.getSelection().getRanges()[0];
+							if (!currentCursorLocation) return;
+
+							var currSfdcImage = editor.getSelection().getStartElement();
+							if (currSfdcImage && currSfdcImage.is('img')) {
+								// Check if the img src contains any string that indicates it is a Salesforce image
+								var checkedArray = isSfdcImageUrl(currSfdcImage.getAttribute('src'));
+
+								if (checkedArray.length > 0) {
+								   currSfdcImage.setAttribute('alt', data.value.alt);
+
+									// Record a change was made
+									editor.fire('saveSnapshot');
+								}
+							}
+						}
+						break;
+				case "sfdcMediaEmbed":
+					var iframe = data.value;
+					editor.insertHtml(iframe);
+					if(editor.container && editor.container.$) {
+						editor.container.$.scrollIntoView();
+					}
+					break;
+				 case "sfdcSmartLink":
+					if( (data !== null) && (typeof data !== "undefined") ) {
+						if( (data.value !== null) && (typeof data !== "undefined") ) {
+							 var articleName = data.value.articleTitle;
+							 var smartLink = data.value.articleUrlValue;
+							 var target = (data.value.target).trim();
+							 var lightningTarget = data.value.lightningTarget;
+							 var html = '<a href="' + smartLink + '"';
+							 
+							 if (target !== null && typeof target !== "undefined" && target != "") {
+								  var escapedTarget = escape(target);
+								  html += ' target="' + escapedTarget + '"';
+							 }
+							 
+							 if (lightningTarget !== null && typeof lightningTarget !== "undefined" && lightningTarget !== "") {
+								  var escapedLightningTarget = escape(lightningTarget);
+								  html += ' data-lightning-target="' + escapedLightningTarget + '"';
+							 }
+							 html += '>' + articleName + '</a> '; // trailing space is intentional
+							 editor.insertHtml(html);
+						}
+					}
+					break;
+				case "readOnly":
+					editor.setReadOnly(data.value);
+					break;
+				case "isNarrow":
+					document.body.className += " narrow";
+					break;
+				case "customCssClasses":
+					document.body.className += "";
+					break;
+				case "setCursorAtTop":
+				   setCursorAtTop();
+				   break;
+				case "focus": 
+					window.requestAnimationFrame(function () {
+						//Fixing the Accessiblity issue W-4832570
+						if( !false || data.action !== "sfdcFrameLoaded"){
+							editor.focus();
+						}
+					});
+					break;
+				case "setTitle":
+					// Fixing the accessibility label, W-8146479
+					var ckEditorBodyFrame = document.getElementsByClassName("cke_wysiwyg_frame")[0];
+					if (ckEditorBodyFrame) {
+						// Update the iframe title
+						ckEditorBodyFrame.title = data.value;
+					}
+					if (ckEditorBodyFrame.contentDocument) {
+						// Update the document title of ckEditor frame
+						ckEditorBodyFrame.contentDocument.title = data.value;
+					}
+					if (ckDom && ckDom.getAttribute("aria-labelledby")) {
+						// Update the ckEditor's aria-labelledby attribute
+						var ckEditorLabelTagId = ckDom.getAttribute("aria-labelledby");
+						var ckEditorLabelTag = document.getElementById(ckEditorLabelTagId);
+						if (ckEditorLabelTag) {
+							ckEditorLabelTag.innerText = data.value;
+						}
+					}
+					break;
+				default : 
+					break;
+			}
+		};
+	};
+	</script>
+
+	<textarea name="editor" id="editor" rows="15" cols="80" style="visibility: hidden; display: none;">        </textarea><div id="cke_editor" class="cke_1 cke cke_reset cke_chrome cke_editor_editor cke_ltr cke_browser_webkit" dir="ltr" lang="en" role="application" aria-labelledby="cke_editor_arialbl"><span id="cke_editor_arialbl" class="cke_voice_label">Rich Text Editor, editor</span><div class="cke_inner cke_reset" role="presentation"><span id="cke_1_top" class="cke_top cke_reset_all" role="presentation" style="height: auto; user-select: none;"><span id="cke_10" class="cke_voice_label">Editor toolbars</span><span id="cke_1_toolbox" class="cke_toolbox" role="group" aria-labelledby="cke_10" onmousedown="return false;"><span id="cke_14" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_15" class="cke_button cke_button__removeformat cke_button_off" href="javascript:void('Remove Format')" title="Remove Format" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_15_label" aria-describedby="cke_15_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(3,event);" onfocus="return CKEDITOR.tools.callFunction(4,event);" onclick="CKEDITOR.tools.callFunction(5,this);return false;"><span class="cke_button_icon cke_button__removeformat_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -4980px;background-size:auto;">&nbsp;</span><span id="cke_15_label" class="cke_button_label cke_button__removeformat_label" aria-hidden="false">Remove Format</span><span id="cke_15_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_16" class="cke_button cke_button__textcolor cke_button_expandable cke_button_off" href="javascript:void('Text Color')" title="Text Color" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_16_label" aria-describedby="cke_16_description" aria-haspopup="listbox" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(6,event);" onfocus="return CKEDITOR.tools.callFunction(7,event);" onclick="CKEDITOR.tools.callFunction(8,this);return false;" aria-expanded="false"><span class="cke_button_icon cke_button__textcolor_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -1080px;background-size:auto;">&nbsp;</span><span id="cke_16_label" class="cke_button_label cke_button__textcolor_label" aria-hidden="false">Text Color</span><span id="cke_16_description" class="cke_button_label" aria-hidden="false"></span><span class="cke_button_arrow"></span></a><a id="cke_17" class="cke_button cke_button__bgcolor cke_button_expandable cke_button_off" href="javascript:void('Background Color')" title="Background Color" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_17_label" aria-describedby="cke_17_description" aria-haspopup="listbox" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(9,event);" onfocus="return CKEDITOR.tools.callFunction(10,event);" onclick="CKEDITOR.tools.callFunction(11,this);return false;" aria-expanded="false"><span class="cke_button_icon cke_button__bgcolor_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -1020px;background-size:auto;">&nbsp;</span><span id="cke_17_label" class="cke_button_label cke_button__bgcolor_label" aria-hidden="false">Background Color</span><span id="cke_17_description" class="cke_button_label" aria-hidden="false"></span><span class="cke_button_arrow"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_18" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_19" class="cke_button cke_button__bold cke_button_off" href="javascript:void('Bold')" title="Bold (Ctrl+B)" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_19_label" aria-describedby="cke_19_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(12,event);" onfocus="return CKEDITOR.tools.callFunction(13,event);" onclick="CKEDITOR.tools.callFunction(14,this);return false;"><span class="cke_button_icon cke_button__bold_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -60px;background-size:auto;">&nbsp;</span><span id="cke_19_label" class="cke_button_label cke_button__bold_label" aria-hidden="false">Bold</span><span id="cke_19_description" class="cke_button_label" aria-hidden="false">&nbsp;Keyboard shortcut Ctrl+B</span></a><a id="cke_20" class="cke_button cke_button__italic cke_button_off" href="javascript:void('Italic')" title="Italic (Ctrl+I)" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_20_label" aria-describedby="cke_20_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(15,event);" onfocus="return CKEDITOR.tools.callFunction(16,event);" onclick="CKEDITOR.tools.callFunction(17,this);return false;"><span class="cke_button_icon cke_button__italic_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -120px;background-size:auto;">&nbsp;</span><span id="cke_20_label" class="cke_button_label cke_button__italic_label" aria-hidden="false">Italic</span><span id="cke_20_description" class="cke_button_label" aria-hidden="false">&nbsp;Keyboard shortcut Ctrl+I</span></a><a id="cke_21" class="cke_button cke_button__underline cke_button_off" href="javascript:void('Underline')" title="Underline (Ctrl+U)" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_21_label" aria-describedby="cke_21_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(18,event);" onfocus="return CKEDITOR.tools.callFunction(19,event);" onclick="CKEDITOR.tools.callFunction(20,this);return false;"><span class="cke_button_icon cke_button__underline_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -360px;background-size:auto;">&nbsp;</span><span id="cke_21_label" class="cke_button_label cke_button__underline_label" aria-hidden="false">Underline</span><span id="cke_21_description" class="cke_button_label" aria-hidden="false">&nbsp;Keyboard shortcut Ctrl+U</span></a><a id="cke_22" class="cke_button cke_button__strike cke_button_off" href="javascript:void('Strikethrough')" title="Strikethrough" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_22_label" aria-describedby="cke_22_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(21,event);" onfocus="return CKEDITOR.tools.callFunction(22,event);" onclick="CKEDITOR.tools.callFunction(23,this);return false;"><span class="cke_button_icon cke_button__strike_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -180px;background-size:auto;">&nbsp;</span><span id="cke_22_label" class="cke_button_label cke_button__strike_label" aria-hidden="false">Strikethrough</span><span id="cke_22_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_23" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_24" class="cke_button cke_button__table cke_button_off" href="javascript:void('Table')" title="Table" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_24_label" aria-describedby="cke_24_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(24,event);" onfocus="return CKEDITOR.tools.callFunction(25,event);" onclick="CKEDITOR.tools.callFunction(26,this);return false;"><span class="cke_button_icon cke_button__table_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -6060px;background-size:auto;">&nbsp;</span><span id="cke_24_label" class="cke_button_label cke_button__table_label" aria-hidden="false">Table</span><span id="cke_24_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_25" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_26" class="cke_button cke_button__sfdcimagemenu cke_button_off cke_button_expandable " href="javascript:void('Insert images into your message')" title="Insert images into your message" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_26_label" aria-describedby="cke_26_description" aria-haspopup="menu" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(27,event);" onfocus="return CKEDITOR.tools.callFunction(28,event);" onclick="CKEDITOR.tools.callFunction(29,this);return false;"><span class="cke_button_icon cke_button__sfdcimagemenu_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/sfdcImageMenu/icons/sfdcImageMenu.png?t=4.24.0.3');background-position:0 0px;background-size:16px;">&nbsp;</span><span id="cke_26_label" class="cke_button_label cke_button__sfdcimagemenu_label" aria-hidden="false">Insert images into your message</span><span id="cke_26_description" class="cke_button_label" aria-hidden="false"></span><span class="cke_button_arrow"></span></a><a id="cke_27" class="cke_button cke_button__sfdccodeblock cke_button_off" href="javascript:void('Add a code sample')" title="Add a code sample" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_27_label" aria-describedby="cke_27_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(30,event);" onfocus="return CKEDITOR.tools.callFunction(31,event);" onclick="CKEDITOR.tools.callFunction(32,this);return false;"><span class="cke_button_icon cke_button__sfdccodeblock_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/sfdcCodeBlock/images/codeblock.png?t=4.24.0.3');background-position:0 0px;background-size:16px;">&nbsp;</span><span id="cke_27_label" class="cke_button_label cke_button__sfdccodeblock_label" aria-hidden="false">Add a code sample</span><span id="cke_27_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_28" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_29" class="cke_button cke_button__link cke_button_off" href="javascript:void('Link')" title="Link (Ctrl+K)" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_29_label" aria-describedby="cke_29_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(33,event);" onfocus="return CKEDITOR.tools.callFunction(34,event);" onclick="CKEDITOR.tools.callFunction(35,this);return false;"><span class="cke_button_icon cke_button__link_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3780px;background-size:auto;">&nbsp;</span><span id="cke_29_label" class="cke_button_label cke_button__link_label" aria-hidden="false">Link</span><span id="cke_29_description" class="cke_button_label" aria-hidden="false">&nbsp;Keyboard shortcut Ctrl+K</span></a><a id="cke_30" class="cke_button cke_button__unlink cke_button_disabled " href="javascript:void('Unlink')" title="Unlink" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_30_label" aria-describedby="cke_30_description" aria-haspopup="false" aria-disabled="true" onkeydown="return CKEDITOR.tools.callFunction(36,event);" onfocus="return CKEDITOR.tools.callFunction(37,event);" onclick="CKEDITOR.tools.callFunction(38,this);return false;"><span class="cke_button_icon cke_button__unlink_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3840px;background-size:auto;">&nbsp;</span><span id="cke_30_label" class="cke_button_label cke_button__unlink_label" aria-hidden="false">Unlink</span><span id="cke_30_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_31" class="cke_button cke_button__anchor cke_button_off" href="javascript:void('Anchor')" title="Anchor" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_31_label" aria-describedby="cke_31_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(39,event);" onfocus="return CKEDITOR.tools.callFunction(40,event);" onclick="CKEDITOR.tools.callFunction(41,this);return false;"><span class="cke_button_icon cke_button__anchor_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3720px;background-size:auto;">&nbsp;</span><span id="cke_31_label" class="cke_button_label cke_button__anchor_label" aria-hidden="false">Anchor</span><span id="cke_31_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_32" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_33" class="cke_button cke_button__justifyleft cke_button_off" href="javascript:void('Align Left')" title="Align Left" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_33_label" aria-describedby="cke_33_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(42,event);" onfocus="return CKEDITOR.tools.callFunction(43,event);" onclick="CKEDITOR.tools.callFunction(44,this);return false;"><span class="cke_button_icon cke_button__justifyleft_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3480px;background-size:auto;">&nbsp;</span><span id="cke_33_label" class="cke_button_label cke_button__justifyleft_label" aria-hidden="false">Align Left</span><span id="cke_33_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_34" class="cke_button cke_button__justifycenter cke_button_off" href="javascript:void('Center')" title="Center" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_34_label" aria-describedby="cke_34_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(45,event);" onfocus="return CKEDITOR.tools.callFunction(46,event);" onclick="CKEDITOR.tools.callFunction(47,this);return false;"><span class="cke_button_icon cke_button__justifycenter_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3420px;background-size:auto;">&nbsp;</span><span id="cke_34_label" class="cke_button_label cke_button__justifycenter_label" aria-hidden="false">Center</span><span id="cke_34_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_35" class="cke_button cke_button__justifyright cke_button_off" href="javascript:void('Align Right')" title="Align Right" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_35_label" aria-describedby="cke_35_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(48,event);" onfocus="return CKEDITOR.tools.callFunction(49,event);" onclick="CKEDITOR.tools.callFunction(50,this);return false;"><span class="cke_button_icon cke_button__justifyright_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3540px;background-size:auto;">&nbsp;</span><span id="cke_35_label" class="cke_button_label cke_button__justifyright_label" aria-hidden="false">Align Right</span><span id="cke_35_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_36" class="cke_button cke_button__bidiltr cke_button_on" href="javascript:void('Text direction from left to right')" title="Text direction from left to right" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_36_label" aria-describedby="cke_36_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(51,event);" onfocus="return CKEDITOR.tools.callFunction(52,event);" onclick="CKEDITOR.tools.callFunction(53,this);return false;" aria-pressed="true"><span class="cke_button_icon cke_button__bidiltr_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -420px;background-size:auto;">&nbsp;</span><span id="cke_36_label" class="cke_button_label cke_button__bidiltr_label" aria-hidden="false">Text direction from left to right</span><span id="cke_36_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_37" class="cke_button cke_button__bidirtl cke_button_off" href="javascript:void('Text direction from right to left')" title="Text direction from right to left" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_37_label" aria-describedby="cke_37_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(54,event);" onfocus="return CKEDITOR.tools.callFunction(55,event);" onclick="CKEDITOR.tools.callFunction(56,this);return false;"><span class="cke_button_icon cke_button__bidirtl_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -480px;background-size:auto;">&nbsp;</span><span id="cke_37_label" class="cke_button_label cke_button__bidirtl_label" aria-hidden="false">Text direction from right to left</span><span id="cke_37_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_38" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_39" class="cke_button cke_button__bulletedlist cke_button_off" href="javascript:void('Insert/Remove Bulleted List')" title="Insert/Remove Bulleted List" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_39_label" aria-describedby="cke_39_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(57,event);" onfocus="return CKEDITOR.tools.callFunction(58,event);" onclick="CKEDITOR.tools.callFunction(59,this);return false;"><span class="cke_button_icon cke_button__bulletedlist_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3960px;background-size:auto;">&nbsp;</span><span id="cke_39_label" class="cke_button_label cke_button__bulletedlist_label" aria-hidden="false">Insert/Remove Bulleted List</span><span id="cke_39_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_40" class="cke_button cke_button__numberedlist cke_button_off" href="javascript:void('Insert/Remove Numbered List')" title="Insert/Remove Numbered List" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_40_label" aria-describedby="cke_40_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(60,event);" onfocus="return CKEDITOR.tools.callFunction(61,event);" onclick="CKEDITOR.tools.callFunction(62,this);return false;"><span class="cke_button_icon cke_button__numberedlist_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -4080px;background-size:auto;">&nbsp;</span><span id="cke_40_label" class="cke_button_label cke_button__numberedlist_label" aria-hidden="false">Insert/Remove Numbered List</span><span id="cke_40_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_41" class="cke_button cke_button__indent cke_button_off" href="javascript:void('Increase Indent')" title="Increase Indent" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_41_label" aria-describedby="cke_41_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(63,event);" onfocus="return CKEDITOR.tools.callFunction(64,event);" onclick="CKEDITOR.tools.callFunction(65,this);return false;"><span class="cke_button_icon cke_button__indent_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3180px;background-size:auto;">&nbsp;</span><span id="cke_41_label" class="cke_button_label cke_button__indent_label" aria-hidden="false">Increase Indent</span><span id="cke_41_description" class="cke_button_label" aria-hidden="false"></span></a><a id="cke_42" class="cke_button cke_button__outdent cke_button_disabled " href="javascript:void('Decrease Indent')" title="Decrease Indent" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_42_label" aria-describedby="cke_42_description" aria-haspopup="false" aria-disabled="true" onkeydown="return CKEDITOR.tools.callFunction(66,event);" onfocus="return CKEDITOR.tools.callFunction(67,event);" onclick="CKEDITOR.tools.callFunction(68,this);return false;"><span class="cke_button_icon cke_button__outdent_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/icons.png?t=O9E8');background-position:0 -3300px;background-size:auto;">&nbsp;</span><span id="cke_42_label" class="cke_button_label cke_button__outdent_label" aria-hidden="false">Decrease Indent</span><span id="cke_42_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_43" class="cke_toolbar" role="toolbar"><span class="cke_toolbar_start"></span><span id="cke_11" class="cke_combo cke_combo__font cke_combo_off" role="presentation"><span id="cke_11_label" class="cke_combo_label">Font</span><a class="cke_combo_button" title="Font Name" tabindex="-1" href="javascript:void('Font Name')" hidefocus="true" role="button" aria-labelledby="cke_11_label" aria-haspopup="listbox" onkeydown="return CKEDITOR.tools.callFunction(70,event,this);" onfocus="return CKEDITOR.tools.callFunction(71,event);" onclick="CKEDITOR.tools.callFunction(69,this);return false;" aria-expanded="false"><span id="cke_11_text" class="cke_combo_text cke_combo_inlinelabel">Font</span><span class="cke_combo_open"><span class="cke_combo_arrow"></span></span></a></span><span id="cke_12" class="cke_combo cke_combo__fontsize cke_combo_off" role="presentation"><span id="cke_12_label" class="cke_combo_label">Size</span><a class="cke_combo_button" title="Font Size" tabindex="-1" href="javascript:void('Font Size')" hidefocus="true" role="button" aria-labelledby="cke_12_label" aria-haspopup="listbox" onkeydown="return CKEDITOR.tools.callFunction(73,event,this);" onfocus="return CKEDITOR.tools.callFunction(74,event);" onclick="CKEDITOR.tools.callFunction(72,this);return false;" aria-expanded="false"><span id="cke_12_text" class="cke_combo_text cke_combo_inlinelabel">Size</span><span class="cke_combo_open"><span class="cke_combo_arrow"></span></span></a></span><span id="cke_13" class="cke_combo cke_combo__format cke_combo_off" role="presentation"><span id="cke_13_label" class="cke_combo_label">Format</span><a class="cke_combo_button" title="Paragraph Format" tabindex="-1" href="javascript:void('Paragraph Format')" hidefocus="true" role="button" aria-labelledby="cke_13_label" aria-haspopup="listbox" onkeydown="return CKEDITOR.tools.callFunction(76,event,this);" onfocus="return CKEDITOR.tools.callFunction(77,event);" onclick="CKEDITOR.tools.callFunction(75,this);return false;" aria-expanded="false"><span id="cke_13_text" class="cke_combo_text cke_combo_inlinelabel">Format</span><span class="cke_combo_open"><span class="cke_combo_arrow"></span></span></a></span><span class="cke_toolbar_end"></span></span><span id="cke_44" class="cke_toolbar cke_toolbar_last" role="toolbar"><span class="cke_toolbar_start"></span><span class="cke_toolgroup" role="presentation"><a id="cke_45" class="cke_button cke_button__sfdcquicktext cke_button_off" href="javascript:void('Insert quick text')" title="Insert quick text" tabindex="-1" hidefocus="true" role="button" aria-labelledby="cke_45_label" aria-describedby="cke_45_description" aria-haspopup="false" aria-disabled="false" onkeydown="return CKEDITOR.tools.callFunction(78,event);" onfocus="return CKEDITOR.tools.callFunction(79,event);" onclick="CKEDITOR.tools.callFunction(80,this);return false;"><span class="cke_button_icon cke_button__sfdcquicktext_icon" style="background-image:url('https://docusign.lightning.force.com/ckeditor/ckeditor-4.x/rel/plugins/sfdcQuickText/icons/sfdcQuickText.png?t=4.24.0.3');background-position:0 0px;background-size:16px;">&nbsp;</span><span id="cke_45_label" class="cke_button_label cke_button__sfdcquicktext_label" aria-hidden="false">Insert quick text</span><span id="cke_45_description" class="cke_button_label" aria-hidden="false"></span></a></span><span class="cke_toolbar_end"></span></span></span></span><div id="cke_1_contents" class="cke_contents cke_reset" role="presentation" style="height: 255px;"><span id="cke_48" class="cke_voice_label">Press ALT 0 for help</span><iframe src="" frameborder="0" class="cke_wysiwyg_frame cke_reset" title="Email Body" aria-describedby="cke_48" tabindex="0" allowtransparency="true" style="width: 100%; height: 100%;"></iframe></div></div></div>
+
+
+
+
+
+
+<iframe id="walkme-native-functions" class="walkme-to-remove" style="display: none; position: absolute; visibility: hidden; z-index: -2147483647;"></iframe><div class="cke_screen_reader_only cke_copyformatting_notification"><div aria-live="polite"></div></div><div class="calendly-frame-tag" manager_id="23f7f4fb-e856-49bd-bbf9-fe89ff9c65de" style="height: 0px; width: 0px; visibility: hidden;" id="23f7f4fb-e856-49bd-bbf9-fe89ff9c65de"></div><div class="calendly-lifecycle-optibutton_singleton"></div><iframe id="wm-deepui-natives-iframe" class="walkme-to-remove" style="display: none; position: absolute; visibility: hidden; z-index: -2147483647;"></iframe><div id="walkme-player" class="walkme-player walkme-colorado walkme-allenby walkme-theme-white-blue walkme-direction-ltr walkme-notie walkme-position-major-right walkme-position-minor-bottom walkme-dynamic-size walkme-to-destroy walkme-override walkme-css-reset walkme-language-default" role="button" aria-label="IAM Help" draggable="true" style="right: 0px;" data-inanimation="0"><div class="walkme-in-wrapper walkme-override walkme-css-reset" style="height: 112.799px;"><div class="walkme-question-mark walkme-override walkme-css-reset"></div><div class="walkme-title walkme-override walkme-css-reset" style="font-size: 11px !important; width: 55.7986px; right: -7.8993px; bottom: 24.3993px;">IAM Help<span class="grippy"></span></div></div></div></body>
