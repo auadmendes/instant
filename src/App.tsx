@@ -1,17 +1,16 @@
-import { useState } from 'react'
 import logo from './assets/text.png'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   function handleMessageTest() {
     alert('Testing it')
   }
 
   return (
-    <div className="bg-slate-300 flex flex-col w-96 h-96 gap-2 p-3">
-      <h1>Welcome to My Extension</h1>
+    <div className="bg-slate-100 flex flex-col w-96 h-96 rounded gap-2 p-3">
+      <h1 className='bg-green-500'>Instant</h1>
       <p>This is a custom Chrome extension popup.</p>
       <button onClick={() => alert('Hello, Chrome Extension!')}>
         Click Me
@@ -27,7 +26,7 @@ function App() {
         >
         Click Here
       </button>
-      <input className='w-96 h-5 border border-red-400' />
+      <input className='w-80 h-5 border border-red-400' />
     </div>
   )
 }
