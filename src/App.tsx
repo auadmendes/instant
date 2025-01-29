@@ -1,4 +1,5 @@
 import logo from './assets/text.png'
+import { Header } from './components/header'
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
 
   return (
     <div className="bg-slate-100 flex flex-col w-96 h-96 rounded gap-2 p-3">
-      <h1 className='bg-green-500'>Instant</h1>
+      <Header />
       <p>This is a custom Chrome extension popup.</p>
       <button onClick={() => alert('Hello, Chrome Extension!')}>
         Click Me
