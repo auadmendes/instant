@@ -1,5 +1,6 @@
 import logo from './assets/text.png'
 import { Header } from './components/header'
+import { Template } from './components/template'
 
 
 function App() {
@@ -10,24 +11,13 @@ function App() {
   }
 
   return (
-    <div className="bg-slate-100 flex flex-col w-96 h-96 rounded gap-2 p-3">
+    <div className="bg-slate-50/80 flex flex-col w-96 h-96 rounded gap-2">
       <Header />
-      <p>This is a custom Chrome extension popup.</p>
-      <button onClick={() => alert('Hello, Chrome Extension!')}>
-        Click Me
-      </button>
-      <img
-        src={logo}
-        className='rounded-sm p-1 w-10 h-10'
-        alt='logo'
-      />
-      <button 
-        className='p-3 border-0 w-24 bg-green-300 text-slate-800 hover:bg-green-500 transition-all rounded-md shadow-sm'
-        onClick={handleMessageTest}
-        >
-        Click Here
-      </button>
-      <input className='w-80 h-5 border border-red-400' />
+      <div className='w-full flex justify-around'>
+        <span>Templates</span>
+        <span>Automations</span>
+      </div>
+      <Template />
     </div>
   )
 }

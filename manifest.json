@@ -3,9 +3,9 @@
   "name": "Instant",
   "version": "1.0.0",
   "icons": {
-    "16": "src/assets/text.png",
-    "48": "src/assets/text.png",
-    "128": "src/assets/text.png"
+    "16": "src/assets/icon-clock.png",
+    "48": "src/assets/icon-clock.png",
+    "128": "src/assets/icon-clock.png"
   },
   "host_permissions": [
     "http://*.salesforce.com/*",
@@ -13,7 +13,9 @@
   ],
   "permissions": [
     "activeTab",
-    "scripting"
+    "tabs",
+    "scripting",
+    "storage"
   ],
   "action": { 
     "default_popup": "index.html"
