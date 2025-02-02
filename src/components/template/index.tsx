@@ -1,97 +1,90 @@
-import { useState, useEffect } from "react";
-
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-
+import React, { useState, useEffect, useRef } from "react";
+import { TemplateEditor } from "../editor";
 import { TemplateItem } from "./template-item";
+import { OutputData } from "@editorjs/editorjs";
 
 type TemplateProps = {
   name: string;
-  template: string;
+  template: OutputData;
 };
 
 export function Template() {
-  const [templateName, setTemplateName] = useState<string>(""); // Template call (-template)
-  const [templateContent, setTemplateContent] = useState<string>(""); // Actual template text
-  const [templates, setTemplates] = useState<TemplateProps[]>([]); // Stored templates
+  const [templateName, setTemplateName] = useState<string>("");
+  const [templates, setTemplates] = useState<TemplateProps[]>([]);
 
-  // Load stored templates when the component mounts
+  const templateEditorRef = useRef<{ getData: () => Promise<OutputData | undefined> } | null>(null);
+
   useEffect(() => {
-    async function loadTemplates() {
-      try {
-        const storedTemplates = await getStoredTemplates();
-        setTemplates(storedTemplates);
-      } catch (error) {
-        console.warn(error);
-        setTemplates([]); // Default to empty array if no data is found
-      }
-    }
     loadTemplates();
   }, []);
 
+  const loadTemplates = () => {
+    chrome.storage.local.get("templatesData", (result) => {
+      const storedTemplates: TemplateProps[] = result.templatesData || [];
+      setTemplates(storedTemplates);
+    });
+  };
+
   async function handleSaveTemplate() {
-    if (!templateName.trim() || !templateContent.trim()) return; // Prevent empty saves
+    if (!templateName.trim()) {
+      alert("Please enter a template name.");
+      return;
+    }
 
     try {
-      const newTemplate: TemplateProps = { name: templateName, template: templateContent };
+      let editorData: OutputData | undefined;
+      if (templateEditorRef.current) {
+        editorData = await templateEditorRef.current.getData();
+      }
 
-      // Get existing templates from storage
-      const storedTemplates = await getStoredTemplates();
+      if (!editorData || !editorData.blocks || editorData.blocks.length === 0) {
+        alert("Please enter some content in the editor.");
+        return;
+      }
 
-      // Avoid duplicates
-      const updatedTemplates = [...storedTemplates, newTemplate];
+      const newTemplate: TemplateProps = {
+        name: templateName,
+        template: editorData,
+      };
 
-      // Save to Chrome storage
-      await chrome.storage.local.set({ templatesData: updatedTemplates });
+      chrome.storage.local.get("templatesData", (result) => {
+        const storedTemplates: TemplateProps[] = result.templatesData || [];
+        const updatedTemplates = [...storedTemplates, newTemplate];
 
-      // Update state
-      setTemplates(updatedTemplates);
-      setTemplateName(""); // Clear input fields after saving
-      setTemplateContent("");
+        chrome.storage.local.set({ templatesData: updatedTemplates }, () => {
+          setTemplates(updatedTemplates);
+          setTemplateName("");
+          console.log("Template saved:", newTemplate);
+        });
+      });
     } catch (error) {
       console.error("Error saving template:", error);
     }
   }
 
-  async function handleDeleteTemplate(templateName: string) {
-    try {
-      // Get existing templates from storage
-      const storedTemplates = await getStoredTemplates();
-      console.log(JSON.stringify(storedTemplates))
-      // Remove the selected template
-      const updatedTemplates = storedTemplates.filter((item) => item.name !== templateName);
-
-      // Save updated templates back to Chrome storage
-      await chrome.storage.local.set({ templatesData: updatedTemplates });
-
-      // Update state
-      setTemplates(updatedTemplates);
-    } catch (error) {
-      console.error("Error deleting template:", error);
-    }
+  function handleDeleteTemplate(nameToDelete: string) {
+    chrome.storage.local.get("templatesData", (result) => {
+      const storedTemplates: TemplateProps[] = result.templatesData || [];
+      const updatedTemplates = storedTemplates.filter(
+        (item) => item.name !== nameToDelete
+      );
+      chrome.storage.local.set({ templatesData: updatedTemplates }, () => {
+        setTemplates(updatedTemplates);
+      });
+    });
   }
 
   return (
     <div className="flex flex-col p-3 gap-2">
       <input
         type="text"
-        className="w-full p-2 h-8 rounded-md border border-slate-400"
-        placeholder="Enter template name (e.g., -template)"
+        className="w-full p-2 h-8 rounded-md border border-slate-20n outline-none focus:border-gray-400"
+        placeholder="Enter template name (e.g., -call)"
         value={templateName}
         onChange={(e) => setTemplateName(e.target.value)}
       />
-      
-      <textarea
-        className="w-full p-2 rounded-md border border-slate-400 h-24"
-        placeholder="Enter template content..."
-        value={templateContent}
-        onChange={(e) => setTemplateContent(e.target.value)}
-      />
-      <div className="border p-2 rounded-md">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {templateContent}
-                </ReactMarkdown>
-            </div>
+
+      <TemplateEditor ref={templateEditorRef} />
 
       <button
         className="bg-blue-500 text-white px-3 py-2 rounded-md"
@@ -100,33 +93,18 @@ export function Template() {
         Save Template
       </button>
 
-      <span className="text-xs text-slate-400">
-        My templates ({templates.length})
-      </span>
+      <span className="text-xs text-slate-400">My templates ({templates.length})</span>
 
       <div className="flex flex-col gap-2">
         {templates.map((item, index) => (
-          <div key={index} className="flex justify-between items-center border p-2 rounded-md">
-            <TemplateItem name={item.name} template={item.template} />
-            <button
-              className="bg-red-500 text-white px-2 py-1 rounded-md"
-              onClick={() => handleDeleteTemplate(item.name)}
-            >
-              Delete
-            </button>
-          </div>
+          <TemplateItem
+            key={index}
+            name={item.name}
+            template={item.template}
+            onDelete={handleDeleteTemplate}  // Pass the delete function as a prop
+          />
         ))}
       </div>
     </div>
   );
-}
-
-// Function to get stored templates
-export async function getStoredTemplates(): Promise<TemplateProps[]> {
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.get("templatesData", (result) => {
-      const templatesDataStored: TemplateProps[] = result.templatesData || [];
-      resolve(templatesDataStored);
-    });
-  });
 }
