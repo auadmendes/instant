@@ -1,5 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 
+
 /**
  * Retrieves the snippets from Chrome storage and converts them to a key-value map.
  */
@@ -103,6 +104,7 @@ function handleInputField(event: KeyboardEvent, target: HTMLInputElement | HTMLT
 
 
 
+
 /**
  * Handler for contenteditable elements.
  * It uses the current selection, and if the text immediately before the cursor ends with a snippet trigger,
@@ -155,4 +157,5 @@ document.addEventListener("keydown", (event) => {
     handleInputField(event, target);
   }
 });
+
 

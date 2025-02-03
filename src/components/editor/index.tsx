@@ -10,7 +10,7 @@ export const TemplateEditor = forwardRef(
       if (!editorHolder.current || editorInstance.current) return; // Prevent multiple initializations
 
       console.log("Initializing Editor.js...");
-      const editor = new EditorJS({
+      editorInstance.current = new EditorJS({
         holder: editorHolder.current,
         tools: {
           paragraph: {},
@@ -22,33 +22,28 @@ export const TemplateEditor = forwardRef(
         },
       });
 
-      editorInstance.current = editor;
-
       return () => {
         if (editorInstance.current) {
-          try {
-            editorInstance.current.destroy();
-          } catch (error) {
-            console.error('Error destroying Editor.js instance', error);
-          }
+          console.log("Destroying Editor.js...");
+          editorInstance.current.destroy?.(); // Safe call to avoid errors
+          editorInstance.current = null; // Reset reference after destroying
         }
       };
     }, [props.initialData]);
 
     useImperativeHandle(ref, () => ({
       getData: async (): Promise<OutputData | undefined> => {
-        if (!editorInstance.current) return undefined;
-        return editorInstance.current.save();
+        return editorInstance.current?.save(); // Safe optional chaining
       },
     }));
 
     return (
-        <div
-          ref={editorHolder}
-          id="editorjs"
-          tabIndex={0} // makes the div focusable
-          className="p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start transition-all duration-300 focus-within:h-40 focus-within:overflow-auto focus:outline-none"
-        />
-      );
+      <div
+        ref={editorHolder}
+        id="editorjs"
+        tabIndex={0} // Makes the div focusable
+        className="p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start transition-all duration-300 focus-within:h-40 focus-within:overflow-auto focus:outline-none"
+      />
+    );
   }
 );
