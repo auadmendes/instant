@@ -38,6 +38,8 @@ function handleInputField(event: KeyboardEvent, target: HTMLInputElement | HTMLT
   chrome.storage.local.get("templatesData", (data) => {
     const templatesArray = data.templatesData || [];
 
+    console.log("This is the DATA: ", data)
+
     // Convert array to a key-value object for easier lookup
     const snippets = templatesArray.reduce((acc: { [key: string]: string }, item: { name: string; template: OutputData }) => {
       // Extract only the plain text for input fields (remove HTML tags but preserve breaks as \n)

@@ -51,7 +51,7 @@
     }
   ],
   "options_page": "options.html",
-  "devtools_page": "pages/devtools.html",
+  "devtools_page": "src/devtools.html",
   "background": {
     "service_worker": "src/background/index.ts",
     "type": "module"
