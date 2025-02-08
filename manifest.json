@@ -13,6 +13,7 @@
   ],
   "permissions": [
     "activeTab",
+    "webNavigation",
     "tabs",
     "scripting",
     "storage"
