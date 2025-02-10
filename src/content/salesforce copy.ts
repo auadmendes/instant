@@ -689,13 +689,6 @@ setTimeout(() => {
 
 
 
-
-
-
-
-
-
-
 // Tell TypeScript that CKEDITOR exists globally.
 declare var CKEDITOR: any;
 
@@ -731,20 +724,25 @@ function attachEditorListener() {
     if (nativeEditor && nativeEditor.isContentEditable) {
       nativeEditor.addEventListener("keydown", (event: KeyboardEvent) => {
         if (event.key === "Enter") {
-          //console.log("⌨️ Enter pressed via native event listener on #tinymce.");
+          console.log("⌨️ Enter pressed via native event listener on #tinymce.");
           // Call your snippet replacement function for native editors.
           // e.g., replaceSnippetsNative(nativeEditor);
         }
       });
-      //console.log("✅ Attached native keydown listener to #tinymce.");
+      console.log("✅ Attached native keydown listener to #tinymce.");
     } else {
-      //console.warn("⚠️ Native editor element with id 'tinymce' not found or not contenteditable.");
+      console.warn("⚠️ Native editor element with id 'tinymce' not found or not contenteditable.");
     }
   }
 }
 
 // Call the function to attach listeners.
-attachEditorListener();
+//attachEditorListener();
+
+if (window.location.hostname.includes("https://docusign.lightning.force.com/")) {
+  console.log("Gmail detected – initializing Gmail snippet replacement.");
+  attachEditorListener();
+}
 
 chrome.webNavigation.onHistoryStateUpdated.addListener((details) => {
   console.log("🚦 History state updated in tab", details.tabId, details.url);

@@ -106,7 +106,7 @@ export const TemplateEditor = forwardRef(
         ref={editorHolder}
         id="editorjs"
         tabIndex={0} // Makes the div focusable
-        className="p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start 
+        className="w-full p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start 
         transition-all duration-300 focus-within:h-40 focus-within:overflow-auto focus:outline-none"
       />
     );

@@ -122,7 +122,7 @@ export function TemplateItem({ name, template, onDelete, onUpdate, }) {
             }
         }
     });
-    return (_jsxs("div", { className: "flex justify-between items-center w-full rounded-lg bg-white border border-gray-200 gap-2 p-6 hover:bg-gray-200 hover:bg-opacity-20", children: [_jsxs("div", { className: "flex flex-col w-full", children: [_jsx("span", { className: "text-gray-500 text-lg font-medium", children: name }), _jsx("div", { className: "font-thin text-xs", children: isEditing ? (
+    return (_jsxs("div", { className: "flex justify-between items-center w-full rounded-lg bg-white \r\n      border border-gray-200 gap-2 p-6 hover:bg-gray-200 hover:bg-opacity-20", children: [_jsxs("div", { className: "flex flex-col w-full", children: [_jsx("span", { className: "text-gray-500 text-lg font-medium", children: name }), _jsx("div", { className: "font-thin text-xs w-full", children: isEditing ? (
                         // Render TemplateEditor in edit mode, preloaded with the current template data.
                         _jsx(TemplateEditor, { ref: editorRef, initialData: template })) : (
                         // Render the saved content. (Using dangerouslySetInnerHTML if needed.)

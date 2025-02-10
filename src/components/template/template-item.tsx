@@ -142,11 +142,12 @@ export function TemplateItem({
 
   return (
     <div
-      className="flex justify-between items-center w-full rounded-lg bg-white border border-gray-200 gap-2 p-6 hover:bg-gray-200 hover:bg-opacity-20"
+      className="flex justify-between items-center w-full rounded-lg bg-white 
+      border border-gray-200 gap-2 p-6 hover:bg-gray-200 hover:bg-opacity-20"
     >
       <div className="flex flex-col w-full">
         <span className="text-gray-500 text-lg font-medium">{name}</span>
-        <div className="font-thin text-xs">
+        <div className="font-thin text-xs w-full">
           {isEditing ? (
             // Render TemplateEditor in edit mode, preloaded with the current template data.
             <TemplateEditor ref={editorRef} initialData={template} />

@@ -577,15 +577,15 @@ function attachEditorListener() {
         if (nativeEditor && nativeEditor.isContentEditable) {
             nativeEditor.addEventListener("keydown", (event) => {
                 if (event.key === "Enter") {
-                    console.log("⌨️ Enter pressed via native event listener on #tinymce.");
+                    //console.log("⌨️ Enter pressed via native event listener on #tinymce.");
                     // Call your snippet replacement function for native editors.
                     // e.g., replaceSnippetsNative(nativeEditor);
                 }
             });
-            console.log("✅ Attached native keydown listener to #tinymce.");
+            //console.log("✅ Attached native keydown listener to #tinymce.");
         }
         else {
-            console.warn("⚠️ Native editor element with id 'tinymce' not found or not contenteditable.");
+            //console.warn("⚠️ Native editor element with id 'tinymce' not found or not contenteditable.");
         }
     }
 }

@@ -97,5 +97,5 @@ export const TemplateEditor = forwardRef((props, ref) => {
             return data;
         }),
     }));
-    return (_jsx("div", { ref: editorHolder, id: "editorjs", tabIndex: 0, className: "p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start \r\n        transition-all duration-300 focus-within:h-40 focus-within:overflow-auto focus:outline-none" }));
+    return (_jsx("div", { ref: editorHolder, id: "editorjs", tabIndex: 0, className: "w-full p-3 h-12 overflow-hidden border border-slate-200 rounded-lg justify-start \r\n        transition-all duration-300 focus-within:h-40 focus-within:overflow-auto focus:outline-none" }));
 });
