@@ -464,7 +464,7 @@ if (editor instanceof HTMLIFrameElement) {
     editor = ((_a = editor.contentDocument) === null || _a === void 0 ? void 0 : _a.querySelector("body")) || null;
 }
 if (!editor) {
-    console.warn("⚠️ No Salesforce editor found.");
+    //console.warn("⚠️ No Salesforce editor found.");
 }
 else {
     console.log("✅ Found Salesforce editor:", editor);
@@ -571,7 +571,7 @@ function attachEditorListener() {
         }
     }
     else {
-        console.warn("⚠️ CKEDITOR not defined. Falling back to native event listeners.");
+        //console.warn("⚠️ CKEDITOR not defined. Falling back to native event listeners.");
         // Fallback: Use native event listeners on the element with id "tinymce"
         const nativeEditor = document.getElementById("tinymce");
         if (nativeEditor && nativeEditor.isContentEditable) {

@@ -588,7 +588,7 @@ if (editor instanceof HTMLIFrameElement) {
 }
 
 if (!editor) {
-  console.warn("⚠️ No Salesforce editor found.");
+  //console.warn("⚠️ No Salesforce editor found.");
 } else {
   console.log("✅ Found Salesforce editor:", editor);
 

@@ -464,7 +464,7 @@ if (editor instanceof HTMLIFrameElement) {
     editor = ((_a = editor.contentDocument) === null || _a === void 0 ? void 0 : _a.querySelector("body")) || null;
 }
 if (!editor) {
-    console.warn("⚠️ No Salesforce editor found.");
+    //console.warn("⚠️ No Salesforce editor found.");
 }
 else {
     console.log("✅ Found Salesforce editor:", editor);

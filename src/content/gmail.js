@@ -99,9 +99,10 @@ function monitorGmailEditorGlobally() {
     }, 2000);
 }
 // Start monitoring Gmail.
-monitorGmailEditorGlobally();
+if (window.location.hostname.includes("mail.google.com")) {
+    console.log("Gmail detected – initializing Gmail snippet replacement.");
+    monitorGmailEditorGlobally();
+}
 export {};
-// if (window.location.hostname.includes("mail.google.com")) {
-//   console.log("Gmail detected – initializing Gmail snippet replacement.");
-//   monitorGmailEditorGlobally();
-// }
+//frank.van-haaren@here.com
+//18101e4f-3dc6-428d-bdb9-919fe8db11e5
