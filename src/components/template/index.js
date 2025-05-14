@@ -195,6 +195,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 //   );
 // });
 // export default Template;
+console.log('anything!');
 import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { TemplateEditor } from "../editor";
 import { TemplateItem } from "./template-item";
@@ -267,3 +268,4 @@ const Template = memo(() => {
     return (_jsxs("div", { className: "flex flex-col p-3 gap-2", children: [_jsx("input", { type: "text", className: "w-full p-2 h-8 rounded-md border border-slate-200 outline-none focus:border-gray-400", placeholder: "Enter template name (e.g., -call)", value: templateName, onChange: (e) => setTemplateName(e.target.value) }), _jsx(TemplateEditor, { ref: templateEditorRef }), _jsx("button", { className: "bg-blue-500 text-white px-3 py-2 rounded-md", onClick: handleSaveTemplate, children: "Save Template" }), _jsxs("span", { className: "text-xs text-slate-400", children: ["My templates (", templates.length, ")"] }), _jsx("div", { className: "flex flex-col gap-2", children: templates.map((item, index) => (_jsx(TemplateItem, { name: item.name, template: item.template, onDelete: handleDeleteTemplate, onUpdate: handleUpdateTemplate }, index))) })] }));
 });
 export default Template;
+console.log('anything!');

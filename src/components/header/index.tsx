@@ -2,6 +2,7 @@ import { GrCircleQuestion, GrHome } from "react-icons/gr";
 import { LuTimer } from "react-icons/lu";
 
 export function Header() {
+    
     return (
         <header className="flex items-start justify-between p-3 bg-slate-100 w-full h-20">
             <div className="flex gap-1">

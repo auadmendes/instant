@@ -15,6 +15,7 @@
     "activeTab",
     "webNavigation",
     "tabs",
+    "clipboard",
     "scripting",
     "storage"
   ],
@@ -41,14 +42,23 @@
         "https://na4.docusign.net/admin/*",
         "https://eu.docusign.net/admin/*",
         "https://ca.docusign.net/admin/*",
+        "https://demo.docusign.net/admin/*",
+        "https://au.docusign.net/admin/*",
+        "https://badmin.docusign.com/*",
+        "https://apps.docusign.com/send/documents?type=envelopes/*",
         "https://www.notion.so/Links-and-tools-640d8b97e1e14b1c8ddc92c59fdcef22",
         "https://www.flaticon.com/search?word=type&k=1736987457617&log-in=google"],
       "js": [
         "src/content/content.ts",
-        "src/content/salesforce.ts",
-        "src/content/gmail.ts",
+        
+        
         "src/content/linkify.ts",
-        "src/content/finder.ts",
+        "src/features/finder/finder.ts",
+        "src/features/clipboard/clipboard.ts",
+        "src/features/print/print-pdf.ts",
+        "src/features/snippet/basic/snippetForCommonInputsAbdtextArea.ts",
+        "src/features/snippet/gmail/gmail.ts",
+        "src/features/snippet/salesforce/salesforce.ts",
         "src/content/float/float.ts"
       ], 
       "run_at": "document_idle",
@@ -58,7 +68,10 @@
  
   "web_accessible_resources": [
     {
-      "resources": ["src/assets/*.png"],
+      "resources": [
+        "src/assets/*.png",
+        "src/assets/automation.png"
+      ],
       "matches": []
     }
   ],

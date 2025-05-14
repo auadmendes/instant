@@ -1,812 +1,31 @@
 "use strict";
-// const observer = new MutationObserver(() => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   // Iterate over each element to extract the relevant data
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//     const labelElement = element.querySelector('.test-id__field-label');
-//     const valueElement = element.querySelector('.test-id__field-value');
-//     if (labelElement && valueElement) {
-//       const label = labelElement.textContent?.trim() ?? "";
-//       const value = valueElement.textContent?.trim() ?? "";
-//       if (fieldsToExtract.indexOf(label) !== -1) {
-//         extractedData[label] = value;
-//       }
-//     }
-//   });
-//   // If all required fields are found, log and stop the observer
-//   if (fieldsToExtract.every(field => extractedData[field])) {
-//     //console.log("Extracted Data:", extractedData);
-//     observer.disconnect(); // Stop observing once all fields are found
-//     return
-//   }
-// });
-// // Start observing the document body for changes in the child nodes (DOM updates)
-// observer.observe(document.body, { childList: true, subtree: true });
-// // Inject floating button and display extracted data
-// const injectFloatingButton = () => {
-//   console.log('Injecting floating button...');
-//   const floatingButton = document.createElement('button');
-//   floatingButton.style.position = 'fixed';
-//   floatingButton.style.right = '10px'; // Position it on the right side
-//   floatingButton.style.top = '50%'; // Position it vertically in the middle
-//   floatingButton.style.padding = '0'; // Remove padding
-//   floatingButton.style.borderRadius = '50%'; // Make it a circle
-//   floatingButton.style.backgroundColor = '#ACE1AF'; // For testing visibility
-//   floatingButton.style.color = '#fff';
-//   floatingButton.style.fontSize = '30px'; // Adjust font size to fit well
-//   floatingButton.style.border = 'none';
-//   floatingButton.style.cursor = 'pointer';
-//   floatingButton.style.width = '40px'; // Width of the circle
-//   floatingButton.style.height = '40px'; // Height of the circle
-//   floatingButton.style.display = 'flex'; // Enable flexbox to center content
-//   floatingButton.style.alignItems = 'center'; // Vertically center the text
-//   floatingButton.style.justifyContent = 'center'; // Horizontally center the text
-//   floatingButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//   floatingButton.textContent = '+'; // The plus symbol
-//   // Ensure the button is on top
-//   floatingButton.style.zIndex = '9999';
-//   // Enable dragging
-//   let isDragging = false;
-//   let offsetX: number, offsetY: number;
-//   floatingButton.addEventListener('mousedown', (event) => {
-//     isDragging = true;
-//     offsetY = event.clientY - floatingButton.getBoundingClientRect().top;
-//     floatingButton.style.cursor = 'grabbing';
-//   });
-//   document.addEventListener('mousemove', (event) => {
-//     if (isDragging) {
-//       const y = event.clientY - offsetY;
-//       floatingButton.style.top = `${y}px`;
-//     }
-//   });
-//   document.addEventListener('mouseup', () => {
-//     isDragging = false;
-//     floatingButton.style.cursor = 'pointer';
-//   });
-//   // Toggle the floating panel
-//   floatingButton.addEventListener('click', () => {
-//     toggleFloatingPanel();
-//   });
-//   // Append the button to the body
-//   document.body.appendChild(floatingButton);
-// };
-// // Toggle the floating panel
-// const toggleFloatingPanel = () => {
-//   let panel = document.getElementById('floatingPanel');
-//   if (!panel) {
-//     panel = document.createElement('div');
-//     panel.id = 'floatingPanel';
-//     panel.style.position = 'fixed';
-//     panel.style.bottom = '70px';
-//     panel.style.right = '20px';
-//     panel.style.width = '300px';
-//     panel.style.height = '400px';
-//     panel.style.backgroundColor = 'white';
-//     panel.style.borderRadius = '8px';
-//     panel.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//     panel.style.overflow = 'auto';
-//     panel.style.zIndex = '9999'; // Ensure the panel is on top
-//     panel.innerHTML = `
-//     <div style="padding: 10px;">
-//       <h3 style="margin-bottom: 10px; font-size: 18px; font-weight: 600;">Case Overview</h3>
-//       <div>
-//         <p id="caseNumberText">Case Number: Not retrieved yet</p>
-//         <p id="subjectText">Subject: Not retrieved yet</p>
-//         <p id="descriptionText">Description: Not retrieved yet</p>
-//         <button id="getCaseDetailsButton" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Case Details</button>
-//         <button id="startObserverButton" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Start Observer</button>
-//       </div>
-//       <hr style="margin: 10px 0;">
-//       <h4>Email Details:</h4>
-//       <div id="emailDetails" style="max-height: 150px; overflow-y: auto; font-size: 14px; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">
-//         No email extracted yet.
-//       </div>
-//     </div>
-//     <button id="closePanel" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #ff0000; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
-//   `;
-//     document.body.appendChild(panel);
-//     // Event listeners for buttons
-//     const getCaseDetailsButton = panel.querySelector('#getCaseDetailsButton') as HTMLButtonElement;
-//     const startObserverButton = panel.querySelector('#startObserverButton') as HTMLButtonElement;
-//     const closeButton = panel.querySelector('#closePanel') as HTMLButtonElement;
-//     if (getCaseDetailsButton) {
-//       getCaseDetailsButton.addEventListener('click', () => {
-//         const extractedData = getExtractedData();
-//         (panel!.querySelector('#caseNumberText') as HTMLElement).textContent = `Case Number: ${extractedData["Case Number"] ?? "Not found"}`;
-//         (panel!.querySelector('#subjectText') as HTMLElement).textContent = `Subject: ${extractedData["Subject"] ?? "Not found"}`;
-//         (panel!.querySelector('#descriptionText') as HTMLElement).textContent = `Description: ${extractedData["Description"] ?? "Not found"}`;
-//       });
-//     }
-//     if (startObserverButton) {
-//       startObserverButton.addEventListener('click', () => {
-//         console.log("Observer started!");
-//         startEmailObserver(); // Call the function to start the observer
-//       });
-//     }
-//     if (closeButton) {
-//       closeButton.addEventListener('click', () => {
-//         panel?.remove();
-//       });
-//     }
-//   }
-// };
-// // MutationObserver function
-// function startEmailObserver() {
-//   const observeremail = new MutationObserver(() => {
-//     extractEmailContent();
-//   });
-//   observeremail.observe(document.body, { childList: true, subtree: true });
-//   extractEmailContent(); // Run immediately
-// }
-// function extractEmailContent() {
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//     console.log("iframe found");
-//     try {
-//       const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//       if (iframeDocument) {
-//         console.log("iframe document found");
-//         const bodyText = iframeDocument.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted body text from iframe:", bodyText);
-//           storeExtractedText(bodyText);
-//         } else {
-//           console.log("iframe body text is empty or not yet loaded.");
-//         }
-//       } else {
-//         console.log("iframe document is not yet available.");
-//       }
-//     } catch (error) {
-//       console.error("Error accessing iframe content:", error);
-//     }
-//   } else {
-//     console.log("iframe not yet found in the DOM.");
-//     const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//     if (richTextOutput) {
-//       console.log("emailui-rich-text-output found");
-//       const htmlContent = richTextOutput.getAttribute('value');
-//       if (htmlContent) {
-//         console.log("emailui-rich-text-output value found:", htmlContent);
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(htmlContent, 'text/html');
-//         const bodyText = doc.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted text from emailui-rich-text-output:", bodyText);
-//           storeExtractedText(bodyText);
-//         } else {
-//           console.log("emailui-rich-text-output: No text in parsed document body");
-//         }
-//       } else {
-//         console.log("emailui-rich-text-output 'value' attribute is empty.");
-//       }
-//     }
-//   }
-// }
-// function storeExtractedText(text: string) {
-//   console.log("Storing extracted text:", text);
-//   const emailDetailsElement = document.getElementById("emailDetails");
-//   if (emailDetailsElement) {
-//     emailDetailsElement.innerText = text;
-//   }
-// }
-// // Function to get the extracted data from MutationObserver
-// const getExtractedData = () => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//     const labelElement = element.querySelector('.test-id__field-label');
-//     const valueElement = element.querySelector('.test-id__field-value');
-//     if (labelElement && valueElement) {
-//       const label = labelElement.textContent?.trim() ?? "";
-//       const value = valueElement.textContent?.trim() ?? "";
-//       if (fieldsToExtract.indexOf(label) !== -1) {
-//         extractedData[label] = value;
-//       }
-//     }
-//   });
-//   return extractedData;
-// };
-// // Call the function to inject the floating button when the page is loaded
-// if (!document.getElementById("floatingButton")) { 
-//   injectFloatingButton();
-// }
-// const observeremail = new MutationObserver(() => {
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//     console.log("iframe found");
-//     try {
-//       const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//       if (iframeDocument) {
-//         console.log("iframe document found");
-//         const bodyText = iframeDocument.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted body text from iframe:", bodyText);
-//           observeremail.disconnect(); // Stop observing after extracting the text
-//         } else {
-//           console.log("iframe body text is empty or not yet loaded.");
-//         }
-//       } else {
-//         console.log("iframe document is not yet available.");
-//       }
-//     } catch (error) {
-//       console.error("Error accessing iframe content:", error);
-//     }
-//   } else {
-//     console.log("iframe not yet found in the DOM.");
-//     // Alternative approach using the emailui-rich-text-output tag
-//     const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//     if (richTextOutput) {
-//       console.log("emailui-rich-text-output found");
-//       const htmlContent = richTextOutput.getAttribute('value');
-//       if (htmlContent) {
-//         console.log("emailui-rich-text-output value found:", htmlContent);
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(htmlContent, 'text/html');
-//         const bodyText = doc.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted text from emailui-rich-text-output:", bodyText);
-//           observeremail.disconnect();
-//         } else {
-//           console.log("emailui-rich-text-output: No text in parsed document body");
-//         }
-//       } else {
-//         console.log("emailui-rich-text-output 'value' attribute is empty.");
-//       }
-//     }
-//   }
-// });
-// observeremail.observe(document.body, { childList: true, subtree: true });
-// abobe is working fine
-//////////////////////////////////////////
-/////////////////////////////////
-////////////////////////
-// const observer = new MutationObserver(() => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   // Iterate over each element to extract the relevant data
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//     const labelElement = element.querySelector('.test-id__field-label');
-//     const valueElement = element.querySelector('.test-id__field-value');
-//     if (labelElement && valueElement) {
-//       const label = labelElement.textContent?.trim() ?? ""; // Ensure it's always a string
-//       const value = valueElement.textContent?.trim() ?? "";
-//       if (fieldsToExtract.indexOf(label) !== -1) {
-//         extractedData[label] = value;
-//       }
-//     }
-//   });
-//   // If all required fields are found, log and stop the observer
-//   if (fieldsToExtract.every(field => extractedData[field])) {
-//     console.log("Extracted Data:", extractedData);
-//     observer.disconnect(); // Stop observing once all fields are found
-//   }
-// });
-// observer.observe(document.body, { childList: true, subtree: true });
-// // Inject floating button and display extracted data
-// const injectFloatingButton = () => {
-//   console.log('Injecting floating button...');
-//   const floatingButton = document.createElement('button');
-//   floatingButton.style.position = 'fixed';
-//   floatingButton.style.right = '10px'; // Position it on the right side
-//   floatingButton.style.top = '50%'; // Position it vertically in the middle
-//   floatingButton.style.padding = '0'; // Remove padding
-//   floatingButton.style.borderRadius = '50%'; // Make it a circle
-//   floatingButton.style.backgroundColor = '#ACE1AF'; // For testing visibility
-//   floatingButton.style.color = '#fff';
-//   floatingButton.style.fontSize = '30px'; // Adjust font size to fit well
-//   floatingButton.style.border = 'none';
-//   floatingButton.style.cursor = 'pointer';
-//   floatingButton.style.width = '40px'; // Width of the circle
-//   floatingButton.style.height = '40px'; // Height of the circle
-//   floatingButton.style.display = 'flex'; // Enable flexbox to center content
-//   floatingButton.style.alignItems = 'center'; // Vertically center the text
-//   floatingButton.style.justifyContent = 'center'; // Horizontally center the text
-//   floatingButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//   floatingButton.textContent = '+'; // The plus symbol
-//   // Ensure the button is on top
-//   floatingButton.style.zIndex = '9999';
-//   // Enable dragging
-//   let isDragging = false;
-//   let offsetX: number, offsetY: number;
-//   floatingButton.addEventListener('mousedown', (event) => {
-//     isDragging = true;
-//     offsetY = event.clientY - floatingButton.getBoundingClientRect().top;
-//     floatingButton.style.cursor = 'grabbing';
-//   });
-//   document.addEventListener('mousemove', (event) => {
-//     if (isDragging) {
-//       const y = event.clientY - offsetY;
-//       floatingButton.style.top = `${y}px`;
-//     }
-//   });
-//   document.addEventListener('mouseup', () => {
-//     isDragging = false;
-//     floatingButton.style.cursor = 'pointer';
-//   });
-//   // Toggle the floating panel
-//   floatingButton.addEventListener('click', () => {
-//     toggleFloatingPanel();
-//   });
-//   // Append the button to the body
-//   document.body.appendChild(floatingButton);
-// };
-// // Toggle the floating panel
-// const toggleFloatingPanel = () => {
-//   let panel = document.getElementById('floatingPanel');
-//   if (!panel) {
-//     panel = document.createElement('div');
-//     panel.id = 'floatingPanel';
-//     panel.style.position = 'fixed';
-//     panel.style.bottom = '70px';
-//     panel.style.right = '20px';
-//     panel.style.width = '300px';
-//     panel.style.height = '400px';
-//     panel.style.backgroundColor = 'white';
-//     panel.style.borderRadius = '8px';
-//     panel.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//     panel.style.overflow = 'auto';
-//     panel.style.zIndex = '9999'; // Ensure the panel is on top
-//     panel.innerHTML = `
-//       <div style="padding: 10px;">
-//         <h3 style="margin-bottom: 10px; font-size: 18px; font-weight: 600;">Case Overview</h3>
-//         <div>
-//           <p id="caseNumberText">Case Number: Not retrieved yet</p> <!-- Initial placeholder for case number -->
-//           <p id="subjectText">Subject: Not retrieved yet</p> <!-- Initial placeholder for subject -->
-//           <p id="descriptionText">Description: Not retrieved yet</p> <!-- Initial placeholder for description -->
-//           <button id="getCaseDetailsButton" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Case Details</button>
-//           <button id="getEmailDetailsButton" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Email Details</button>
-//         </div>
-//         <div id="emailDetailsSection" style="margin-top: 20px; display: none;">
-//           <h4 style="margin-bottom: 10px;">Email Details</h4>
-//           <ul id="emailDetailsList"></ul>
-//         </div>
-//       </div>
-//       <button id="closePanel" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #ff0000; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
-//     `;
-//     document.body.appendChild(panel);
-//     // Add click event to the button to fetch and display the case details
-//     const getCaseDetailsButton = panel.querySelector('#getCaseDetailsButton');
-//     const caseNumberText = panel.querySelector('#caseNumberText');
-//     const subjectText = panel.querySelector('#subjectText');
-//     const descriptionText = panel.querySelector('#descriptionText');
-//     if (getCaseDetailsButton && caseNumberText && subjectText && descriptionText) {
-//       getCaseDetailsButton.addEventListener('click', () => {
-//         // Extracted data
-//         const extractedData = getExtractedData();
-//         caseNumberText.textContent = `Case Number: ${extractedData["Case Number"] ?? "Not found"}`;
-//         subjectText.textContent = `Subject: ${extractedData["Subject"] ?? "Not found"}`;
-//         descriptionText.textContent = `Description: ${extractedData["Description"] ?? "Not found"}`;
-//       });
-//     }
-//     // Add click event to the button to fetch and display the email details
-//     const getEmailDetailsButton = document.querySelector('#getEmailDetailsButton') as HTMLElement;
-//     const emailDetailsSection = document.querySelector('#emailDetailsSection') as HTMLElement;
-//     const emailDetailsList = document.querySelector('#emailDetailsList') as HTMLElement;
-//     if (getEmailDetailsButton && emailDetailsSection && emailDetailsList) {
-//       getEmailDetailsButton.addEventListener('click', () => {
-//         // Fetch and display email details
-//         extractEmailDetails(emailDetailsList);
-//         emailDetailsSection.style.display = 'block'; // Show the email details section
-//       });
-//     }
-//     // Close panel functionality
-//     const closeButton = panel.querySelector('#closePanel');
-//     if (closeButton) {
-//       closeButton.addEventListener('click', () => {
-//         panel?.remove();
-//       });
-//     }
-//   }
-// };
-// // Function to get the extracted data from MutationObserver
-// const getExtractedData = () => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//     const labelElement = element.querySelector('.test-id__field-label');
-//     const valueElement = element.querySelector('.test-id__field-value');
-//     if (labelElement && valueElement) {
-//       const label = labelElement.textContent?.trim() ?? "";
-//       const value = valueElement.textContent?.trim() ?? "";
-//       if (fieldsToExtract.indexOf(label) !== -1) {
-//         extractedData[label] = value;
-//       }
-//     }
-//   });
-//   return extractedData;
-// };
-// // Function to extract email details from the email list
-// const extractEmailDetails = (emailList: Element) => {
-//   const emailDetailsList = document.getElementById('emailDetailsList'); // Make sure it exists
-//   if (!emailDetailsList) {
-//     console.error("No emailDetailsList found in the DOM.");
-//     return;
-//   }
-//   const emailListItems: string[] = [];
-//   emailList.querySelectorAll('li').forEach((liElement) => {
-//     const textContent = liElement.textContent?.trim();
-//     if (textContent) {
-//       emailListItems.push(textContent);
-//     }
-//   });
-//   emailDetailsList.innerHTML = ""; // Clear previous content
-//   if (emailListItems.length > 0) {
-//     emailListItems.forEach((item) => {
-//       const listItem = document.createElement("li");
-//       listItem.textContent = item;
-//       emailDetailsList.appendChild(listItem);
-//     });
-//   } else {
-//     emailDetailsList.innerHTML = "<li>No email details found.</li>";
-//   }
-// };
-// const observeremail = new MutationObserver(() => {
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//     console.log("iframe found .........................................................");
-//     try {
-//       const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//       if (iframeDocument) {
-//         console.log("iframe document found ----------------------------------------------");
-//         const bodyText = iframeDocument.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted body text from iframe:", bodyText);
-//           observeremail.disconnect(); // Stop observing after extracting the text
-//         } else {
-//           console.log("iframe body text is empty or not yet loaded.");
-//         }
-//       } else {
-//         console.log("iframe document is not yet available.");
-//       }
-//     } catch (error) {
-//       console.error("Error accessing iframe content:", error);
-//     }
-//   } else {
-//     console.log("iframe not yet found in the DOM.");
-//     // Alternative approach using the emailui-rich-text-output tag
-//     const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//     if (richTextOutput) {
-//       console.log("emailui-rich-text-output found");
-//       const htmlContent = richTextOutput.getAttribute('value');
-//       if (htmlContent) {
-//         console.log("emailui-rich-text-output value found:", htmlContent);
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(htmlContent, 'text/html');
-//         const bodyText = doc.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted text from emailui-rich-text-output:", bodyText);
-//           observeremail.disconnect();
-//         } else {
-//           console.log("emailui-rich-text-output: No text in parsed document body");
-//         }
-//       } else {
-//         console.log("emailui-rich-text-output 'value' attribute is empty.");
-//       }
-//     }
-//   }
-// });
-// observeremail.observe(document.body, { childList: true, subtree: true });
-// // Call the function to inject the floating button when the page is loaded
-// injectFloatingButton();
-/////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////
-///////////////////////////////
-/////////////////////
-////////////////
-////////////
-/////////
-//////
-////
-///
-//
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//     console.log("iframe found");
-//     try {
-//       const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//       if (iframeDocument) {
-//         console.log("iframe document found");
-//         const bodyText = iframeDocument.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted body text from iframe:", bodyText);
-//           observeremail.disconnect(); // Stop observing after extracting the text
-//         } else {
-//           console.log("iframe body text is empty or not yet loaded.");
-//         }
-//       } else {
-//         console.log("iframe document is not yet available.");
-//       }
-//     } catch (error) {
-//       console.error("Error accessing iframe content:", error);
-//     }
-//   } else {
-//     console.log("iframe not yet found in the DOM.");
-//     // Alternative approach using the emailui-rich-text-output tag
-//     const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//     if (richTextOutput) {
-//       console.log("emailui-rich-text-output found");
-//       const htmlContent = richTextOutput.getAttribute('value');
-//       if (htmlContent) {
-//         console.log("emailui-rich-text-output value found:", htmlContent);
-//         const parser = new DOMParser();
-//         const doc = parser.parseFromString(htmlContent, 'text/html');
-//         const bodyText = doc.body?.textContent?.trim();
-//         if (bodyText) {
-//           console.log("Extracted text from emailui-rich-text-output:", bodyText);
-//           observeremail.disconnect();
-//         } else {
-//           console.log("emailui-rich-text-output: No text in parsed document body");
-//         }
-//       } else {
-//         console.log("emailui-rich-text-output 'value' attribute is empty.");
-//       }
-//     }
-//   }
-// });
-// const observer = new MutationObserver(() => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//       const labelElement = element.querySelector('.test-id__field-label');
-//       const valueElement = element.querySelector('.test-id__field-value');
-//       if (labelElement && valueElement) {
-//           const label = labelElement.textContent?.trim() ?? "";
-//           const value = valueElement.textContent?.trim() ?? "";
-//           if (fieldsToExtract.indexOf(label) !== -1) {
-//               extractedData[label] = value;
-//           }
-//       }
-//   });
-//   if (fieldsToExtract.every(field => extractedData[field])) {
-//       console.log("Extracted Data:", extractedData);
-//       observer.disconnect();
-//   }
-// });
-// observer.observe(document.body, { childList: true, subtree: true });
-// const injectFloatingButton = () => {
-//   console.log('Injecting floating button...');
-//   const floatingButton = document.createElement('button');
-//   floatingButton.style.position = 'fixed';
-//   floatingButton.style.right = '10px';
-//   floatingButton.style.top = '50%';
-//   floatingButton.style.padding = '0';
-//   floatingButton.style.borderRadius = '50%';
-//   floatingButton.style.backgroundColor = '#ACE1AF';
-//   floatingButton.style.color = '#fff';
-//   floatingButton.style.fontSize = '30px';
-//   floatingButton.style.border = 'none';
-//   floatingButton.style.cursor = 'pointer';
-//   floatingButton.style.width = '40px';
-//   floatingButton.style.height = '40px';
-//   floatingButton.style.display = 'flex';
-//   floatingButton.style.alignItems = 'center';
-//   floatingButton.style.justifyContent = 'center';
-//   floatingButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//   floatingButton.textContent = '+';
-//   floatingButton.style.zIndex = '9999';
-//   let isDragging = false;
-//   let offsetX: number, offsetY: number;
-//   floatingButton.addEventListener('mousedown', (event) => {
-//       isDragging = true;
-//       offsetY = event.clientY - floatingButton.getBoundingClientRect().top;
-//       floatingButton.style.cursor = 'grabbing';
-//   });
-//   document.addEventListener('mousemove', (event) => {
-//       if (isDragging) {
-//           const y = event.clientY - offsetY;
-//           floatingButton.style.top = `${y}px`;
-//       }
-//   });
-//   document.addEventListener('mouseup', () => {
-//       isDragging = false;
-//       floatingButton.style.cursor = 'pointer';
-//   });
-//   floatingButton.addEventListener('click', () => {
-//       toggleFloatingPanel();
-//   });
-//   document.body.appendChild(floatingButton);
-// };
-// const toggleFloatingPanel = () => {
-//   let panel = document.getElementById('floatingPanel');
-//   if (!panel) {
-//       panel = document.createElement('div');
-//       panel.id = 'floatingPanel';
-//       panel.style.position = 'fixed';
-//       panel.style.bottom = '70px';
-//       panel.style.right = '20px';
-//       panel.style.width = '300px';
-//       panel.style.height = '400px';
-//       panel.style.backgroundColor = 'white';
-//       panel.style.borderRadius = '8px';
-//       panel.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
-//       panel.style.overflow = 'auto';
-//       panel.style.zIndex = '9999';
-//       panel.innerHTML = `
-//           <div style="padding: 10px;">
-//               <h3 style="margin-bottom: 10px; font-size: 18px; font-weight: 600;">Case Overview</h3>
-//               <div>
-//                   <p id="caseNumberText">Case Number: Not retrieved yet</p>
-//                   <p id="subjectText">Subject: Not retrieved yet</p>
-//                   <p id="descriptionText">Description: Not retrieved yet</p>
-//                   <button id="getCaseDetailsButton" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Case Details</button>
-//                   <button id="getEmailDetailsButton" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Email Details</button>
-//               </div>
-//               <div id="emailDetailsSection" style="margin-top: 20px; display: none;">
-//                   <h4 style="margin-bottom: 10px;">Email Details</h4>
-//                   <ul id="emailDetailsList"></ul>  </div>
-//           </div>
-//           <button id="closePanel" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #ff0000; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
-//       `;
-//       document.body.appendChild(panel);
-//       const getCaseDetailsButton = panel.querySelector('#getCaseDetailsButton');
-//       const caseNumberText = panel.querySelector('#caseNumberText');
-//       const subjectText = panel.querySelector('#subjectText');
-//       const descriptionText = panel.querySelector('#descriptionText');
-//       if (getCaseDetailsButton && caseNumberText && subjectText && descriptionText) {
-//           getCaseDetailsButton.addEventListener('click', () => {
-//               const extractedData = getExtractedData();
-//               caseNumberText.textContent = `Case Number: ${extractedData["Case Number"] ?? "Not found"}`;
-//               subjectText.textContent = `Subject: ${extractedData["Subject"] ?? "Not found"}`;
-//               descriptionText.textContent = `Description: ${extractedData["Description"] ?? "Not found"}`;
-//           });
-//       }
-//       const getEmailDetailsButton = document.querySelector('#getEmailDetailsButton') as HTMLElement;
-//       const emailDetailsSection = document.querySelector('#emailDetailsSection') as HTMLElement;
-//       const emailDetailsContent = document.querySelector('#emailDetailsContent') as HTMLElement;
-//       if (getEmailDetailsButton && emailDetailsSection && emailDetailsContent) {
-//           getEmailDetailsButton.addEventListener('click', () => {
-//               const emailContent = getExtractedEmailData();
-//               emailDetailsContent.textContent = `Email Content: ${emailContent ?? "Not found"}`;
-//               emailDetailsSection.style.display = 'block';
-//           });
-//       }
-//       const closeButton = panel.querySelector('#closePanel');
-//       if (closeButton) {
-//           closeButton.addEventListener('click', () => {
-//               panel?.remove();
-//           });
-//       }
-//   }
-// };
-// const getExtractedData = () => {
-//   const fieldsToExtract = ["Case Number", "Subject", "Description"];
-//   const extractedData: Record<string, string> = {};
-//   document.querySelectorAll('.test-id__output-root').forEach((element) => {
-//       const labelElement = element.querySelector('.test-id__field-label');
-//       const valueElement = element.querySelector('.test-id__field-value');
-//       if (labelElement && valueElement) {
-//           const label = labelElement.textContent?.trim() ?? "";
-//           const value = valueElement.textContent?.trim() ?? "";
-//           if (fieldsToExtract.indexOf(label) !== -1) {
-//               extractedData[label] = value;
-//           }
-//       }
-//   });
-//   return extractedData;
-// };
-// const observeremail = new MutationObserver(() => {
-//   const listItems = document.querySelectorAll('ol li');
-//   if (listItems.length > 0) {
-//       let extractedEmails: string[] = []; // Array to store extracted email content
-//       listItems.forEach(listItem => {
-//           const emailContentDiv = listItem.querySelector('.preamble_custom-summary');
-//           if (emailContentDiv) {
-//               const emailContent = emailContentDiv.textContent?.trim();
-//               if (emailContent) {
-//                   console.log('Extracted email content:', emailContent);
-//                   extractedEmails.push(emailContent); // Add to the array
-//               }
-//           }
-//       });
-//       if (extractedEmails.length > 0) {
-//           // Update the panel with the extracted emails
-//           updateEmailPanel(extractedEmails);
-//           observeremail.disconnect(); // Stop observing after processing all items
-//       }
-//   }
-// });
-// observeremail.observe(document.body, { childList: true, subtree: true });
-// // Function to update the email panel
-// const updateEmailPanel = (emails: string[]) => {
-//   const emailDetailsList = document.querySelector('#emailDetailsList') as HTMLUListElement;
-//   if (emailDetailsList) {
-//       emailDetailsList.innerHTML = ''; // Clear previous list items
-//       emails.forEach(email => {
-//           const listItem = document.createElement('li');
-//           listItem.textContent = email;
-//           emailDetailsList.appendChild(listItem);
-//       });
-//   }
-// };
-// observeremail.observe(document.body, { childList: true, subtree: true });
-// const getExtractedEmailData = () => {
-//   let emailContent = null;
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//       try {
-//           const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//           if (iframeDocument) {
-//               emailContent = iframeDocument.body?.textContent?.trim();
-//               console.log('>>>>>>>>>>>>>>   ',emailContent, '   <<<<<<<<<<<<<<<<<<<<<' )
-//           }
-//       } catch (error) {
-//           console.error("Error accessing iframe content:", error);
-//       }
-//   } else {
-//       const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//       if (richTextOutput) {
-//           const htmlContent = richTextOutput.getAttribute('value');
-//           if (htmlContent) {
-//               const parser = new DOMParser(); // Corrected usage
-//               const doc = parser.parseFromString(htmlContent, 'text/html');
-//               emailContent = doc.body?.textContent?.trim();
-//           }
-//       }
-//   }
-//   return emailContent;
-// };
-// injectFloatingButton();
-// const observeremail = new MutationObserver(() => {
-//   const iframe = document.querySelector('ol li iframe') as HTMLIFrameElement | null;
-//   if (iframe) {
-//       try {
-//           const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-//           if (iframeDocument) {
-//               const bodyText = iframeDocument.body?.textContent?.trim();
-//               console.log(' ====================================  ', bodyText, '   ==================================')
-//               if (bodyText) {
-//                   observeremail.disconnect();
-//               }
-//           }
-//       } catch (error) {
-//           console.error("Error accessing iframe content:", error);
-//       }
-//   } else {
-//       const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-//       if (richTextOutput) {
-//         const htmlContent = richTextOutput.getAttribute('value');
-//         if (htmlContent) {
-//             const parser = new DOMParser(); // Corrected line
-//             const doc = parser.parseFromString(htmlContent, 'text/html');
-//             const bodyText = doc.body?.textContent?.trim();
-//             if (bodyText) {
-//                 observeremail.disconnect();
-//             }
-//         }
-//     }
-//   }
-// });
-const observer = new MutationObserver(() => {
-    const fieldsToExtract = ["Case Number", "Subject", "Description"];
-    const extractedData = {};
-    document.querySelectorAll('.test-id__output-root').forEach((element) => {
-        var _a, _b, _c, _d;
-        const labelElement = element.querySelector('.test-id__field-label');
-        const valueElement = element.querySelector('.test-id__field-value');
-        if (labelElement && valueElement) {
-            const label = (_b = (_a = labelElement.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : "";
-            const value = (_d = (_c = valueElement.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : "";
-            if (fieldsToExtract.indexOf(label) !== -1) {
-                extractedData[label] = value;
-            }
-        }
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-    if (fieldsToExtract.every(field => extractedData[field])) {
-        console.log("Extracted Data:", extractedData);
-        observer.disconnect();
-    }
-});
-observer.observe(document.body, { childList: true, subtree: true });
+};
+const automationPNG = chrome.runtime.getURL("../../assets/automation.png");
+//import im from ;
+//const automationPNG = chrome.runtime.getURL("/assets/automation.png");
+const img = document.createElement('img');
+img.src = chrome.runtime.getURL("src/assets/automation.png");
+img.alt = 'Open Panel';
+img.style.width = '60%';
+img.style.height = '60%';
+img.style.objectFit = 'contain';
 const injectFloatingButton = () => {
-    console.log('Injecting floating button...');
+    //   console.log('Injecting floating button...');
     const floatingButton = document.createElement('button');
     floatingButton.style.position = 'fixed';
     floatingButton.style.right = '10px';
-    floatingButton.style.top = '50%';
+    floatingButton.style.top = '49%';
     floatingButton.style.padding = '0';
     floatingButton.style.borderRadius = '50%';
-    floatingButton.style.backgroundColor = '#ACE1AF';
+    floatingButton.style.backgroundColor = '#0176d3'; //'#ACE1AF';
     floatingButton.style.color = '#fff';
     floatingButton.style.fontSize = '30px';
     floatingButton.style.border = 'none';
@@ -816,9 +35,10 @@ const injectFloatingButton = () => {
     floatingButton.style.display = 'flex';
     floatingButton.style.alignItems = 'center';
     floatingButton.style.justifyContent = 'center';
-    floatingButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+    floatingButton.style.boxShadow = '0 4px 5px rgba(0, 0, 0, 0.2)';
     floatingButton.textContent = '+';
     floatingButton.style.zIndex = '9999';
+    floatingButton.appendChild(img);
     let isDragging = false;
     let offsetX, offsetY;
     floatingButton.addEventListener('mousedown', (event) => {
@@ -849,99 +69,374 @@ const toggleFloatingPanel = () => {
         panel.style.position = 'fixed';
         panel.style.bottom = '70px';
         panel.style.right = '20px';
-        panel.style.width = '300px';
+        panel.style.maxWidth = '600px';
         panel.style.height = '400px';
         panel.style.backgroundColor = 'white';
         panel.style.borderRadius = '8px';
-        panel.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        panel.style.boxShadow = '0 4px 5px rgba(0, 0, 0, 0.2)';
         panel.style.overflow = 'auto';
         panel.style.zIndex = '9999';
         panel.innerHTML = `
-          <div style="padding: 10px;">
-              <h3 style="margin-bottom: 10px; font-size: 18px; font-weight: 600;">Case Overview</h3>
-              <div>
-                  <p id="caseNumberText">Case Number: Not retrieved yet</p>
-                  <p id="subjectText">Subject: Not retrieved yet</p>
-                  <p id="descriptionText">Description: Not retrieved yet</p>
-                  <button id="getCaseDetailsButton" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Case Details</button>
-                  <button id="getEmailDetailsButton" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Email Details</button>
-              </div>
-              <div id="emailDetailsSection" style="margin-top: 20px; display: none;">
-                  <h4 style="margin-bottom: 10px;">Email Details</h4>
-                  <ul id="emailDetailsList"></ul>
-              </div>
-          </div>
-          <button id="closePanel" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #ff0000; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
-      `;
+            <div style="padding: 20px;">
+                <h3 style="margin-bottom: 10px; font-size: 18px; font-weight: 600;">Case Overview</h3>
+                <div>
+                    <p id="caseNumberText">Case Number: Not retrieved yet</p>
+                    <p id="subjectText">Subject: Not retrieved yet</p>
+                    <p id="descriptionText">Description: Not retrieved yet</p>
+                    <button id="getCaseDetailsButton" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Case Details</button>
+                    <button id="getEmailDetailsButton" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Email Details</button>
+                </div>
+                <div id="emailDetailsSection" style="margin-top: 20px; display: none;">
+                    <h3 style="margin-bottom: 10px;"><strong>Email Details </strong></h3>
+                    <ul id="emailDetailsList"></ul>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button id="summarizeButton" style="flex: 1; padding: 5px 10px; background: #ffcc00; color: black; border: none; border-radius: 4px; cursor: pointer;">Summarize</button>
+                    <button id="createCommentButton" style="flex: 1; padding: 5px 10px; background: #6c63ff; color: white; border: none; border-radius: 4px; cursor: pointer;">Create Case Comment</button>
+                </div>
+
+                <div id="summarySection" style="margin-top: 20px; display: none; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                    <h3 style="margin-bottom: 10px;"><strong>Summary</strong></h3>
+                    <p id="summaryText">Not generated yet</p>
+                </div>
+                <div style="margin-top: 20px;">
+                    <label for="kbQuestionInput" style="font-weight: 600; display: block; margin-bottom: 5px;">Ask a question to the knowledge base:</label>
+                    <textarea id="kbQuestionInput" placeholder="Ask a question or provide extra information..." rows="4" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
+                    <!--<input id="kbQuestionInput" type="text" placeholder="e.g., What is the root cause?" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />-->
+                    <button id="askKbQuestionButton" style="margin-top: 10px; padding: 5px 10px; background: #673ab7; color: white; border: none; border-radius: 4px; cursor: pointer;">Ask AI</button>
+                </div>
+            </div>
+            <button id="closePanel" style="position: absolute; top: 10px; right: 10px; padding: 5px 10px; background: #ff0000; color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+            <!-- -->
+            <!--<button id="getTableDataButton" style="padding: 5px 10px; background: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Get Table Data</button>-->
+            <div id="tableMessageSection" style="margin-top: 10px; font-weight: bold;"></div>
+            
+            <!-- <button id="getEnvelopeSummary">Get Envelope Summary</button> -->
+            <div id="commentResult" style="margin-top: 15px; padding: 10px; background: #fff3cd; border-left: 4px solid #ffeeba; border-radius: 4px; display: none;"></div>
+            
+            <button id="getKnowledgeBaseButton" style="flex: 1; padding: 5px 10px; background: #00bcd4; color: white; border: none; border-radius: 4px; cursor: pointer;">Get Knowledge Base</button>
+
+            <div id="responsePanel"></div>
+        `;
         document.body.appendChild(panel);
+        // Get case details
+        const getTableDataButton = panel.querySelector('#getTableDataButton');
+        const tableMessageSection = panel.querySelector('#tableMessageSection');
+        const getKnowledgeBaseButton = panel.querySelector('#getKnowledgeBaseButton');
+        const askKbQuestionButton = panel.querySelector('#askKbQuestionButton');
+        const kbQuestionInput = panel.querySelector('#kbQuestionInput');
+        if (askKbQuestionButton && kbQuestionInput) {
+            askKbQuestionButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+                const question = kbQuestionInput.value.trim();
+                if (!question) {
+                    alert("Please enter a question.");
+                    return;
+                }
+                // Optional: Remove this block to allow sending just the question
+                // const kbText = getExtractedKnowledgeBaseText();
+                // if (!kbText) {
+                //     alert("No knowledge base text found.");
+                //     return;
+                // }
+                const response = yield fetch('http://localhost:5000/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question }) // send only the question
+                });
+                const result = yield response.json();
+                const responsePanel = panel === null || panel === void 0 ? void 0 : panel.querySelector('#responsePanel');
+                if (responsePanel) {
+                    responsePanel.innerHTML = `
+                        <div style="margin-top: 20px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 4px;">
+                            <strong>AI Response:</strong>
+                            <p>${result.answer}</p>
+                        </div>
+                    `;
+                }
+            }));
+        }
+        if (getKnowledgeBaseButton) {
+            getKnowledgeBaseButton.addEventListener('click', () => {
+                const kbText = getExtractedKnowledgeBaseText(); // use your existing function
+                if (!kbText) {
+                    alert("No knowledge base content found.");
+                    return;
+                }
+                navigator.clipboard.writeText(kbText)
+                    .then(() => {
+                    alert("📋 Knowledge Base text copied to clipboard!");
+                })
+                    .catch((err) => {
+                    console.error("❌ Clipboard error:", err);
+                    alert("Failed to copy to clipboard.");
+                });
+            });
+        }
+        if (getTableDataButton) {
+            getTableDataButton.addEventListener('click', () => {
+                const tableText = getTableDataIAC(); // Extract table data (ensure this function exists)
+                console.log("📋 Table Data Extracted:", tableText);
+                // Show success message instead of displaying data in panel
+                tableMessageSection.textContent = "✅ Table loaded successfully!";
+                tableMessageSection.style.color = "#155724"; // Dark green
+                tableMessageSection.style.backgroundColor = "#d4edda"; // Light green
+                tableMessageSection.style.padding = "5px";
+                tableMessageSection.style.borderRadius = "4px";
+            });
+        }
         const getCaseDetailsButton = panel.querySelector('#getCaseDetailsButton');
         const caseNumberText = panel.querySelector('#caseNumberText');
         const subjectText = panel.querySelector('#subjectText');
         const descriptionText = panel.querySelector('#descriptionText');
-        if (getCaseDetailsButton && caseNumberText && subjectText && descriptionText) {
+        if (getCaseDetailsButton) {
             getCaseDetailsButton.addEventListener('click', () => {
                 var _a, _b, _c;
                 const extractedData = getExtractedData();
-                caseNumberText.innerHTML = `Case Number: <strong>${(_a = extractedData["Case Number"]) !== null && _a !== void 0 ? _a : "Not found"}</strong>`;
-                subjectText.innerHTML = `Subject: <strong>${(_b = extractedData["Subject"]) !== null && _b !== void 0 ? _b : "Not found"}</strong>`;
-                descriptionText.innerHTML = `Description: <strong>${(_c = extractedData["Description"]) !== null && _c !== void 0 ? _c : "Not found"}</strong>`;
+                if (caseNumberText) {
+                    caseNumberText.innerHTML = `Case Number: <strong>${(_a = extractedData["Case Number"]) !== null && _a !== void 0 ? _a : "Not found"}</strong>`;
+                }
+                if (subjectText) {
+                    subjectText.innerHTML = `Subject: <strong>${(_b = extractedData["Subject"]) !== null && _b !== void 0 ? _b : "Not found"}</strong>`;
+                }
+                if (descriptionText) {
+                    descriptionText.innerHTML = `Description: <strong>${(_c = extractedData["Description"]) !== null && _c !== void 0 ? _c : "Not found"}</strong>`;
+                }
             });
         }
+        // Get email details
         const getEmailDetailsButton = panel.querySelector('#getEmailDetailsButton');
         const emailDetailsSection = panel.querySelector('#emailDetailsSection');
         const emailDetailsList = panel.querySelector('#emailDetailsList');
-        if (getEmailDetailsButton && emailDetailsSection && emailDetailsList) {
+        if (getEmailDetailsButton) {
             getEmailDetailsButton.addEventListener('click', () => {
                 emailDetailsSection.style.display = 'block';
-                observeremail.observe(document.body, { childList: true, subtree: true });
+                const extractedEmails = getExtractedEmailData();
+                emailDetailsList.innerHTML = '';
+                if (extractedEmails.length === 0) {
+                    emailDetailsList.innerHTML = '<li>No emails found.</li>';
+                    return;
+                }
+                extractedEmails.forEach(emailText => {
+                    const li = document.createElement('li');
+                    li.style.borderBottom = '1px solid #e0e0e0';
+                    li.style.marginBottom = '10px';
+                    li.innerHTML = `<span>${emailText}</span>`;
+                    emailDetailsList.appendChild(li);
+                });
             });
         }
+        // Summarize button
+        const summarizeButton = panel.querySelector('#summarizeButton');
+        const summarySection = panel.querySelector('#summarySection');
+        const summaryText = panel.querySelector('#summaryText');
+        const createCommentButton = panel.querySelector('#createCommentButton');
+        if (createCommentButton) {
+            createCommentButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+                var _a, _b, _c, _d, _e;
+                const caseDetails = getExtractedData();
+                const emailDetails = getExtractedEmailData();
+                const kbQuestionInput = document.querySelector('#kbQuestionInput');
+                const combinedText = `
+                    Case Overview
+                    Case Number: ${(_a = caseDetails["Case Number"]) !== null && _a !== void 0 ? _a : "Not found"}
+        
+                    Subject: ${(_b = caseDetails["Subject"]) !== null && _b !== void 0 ? _b : "Not found"}
+        
+                    Description: ${(_c = caseDetails["Description"]) !== null && _c !== void 0 ? _c : "Not found"}
+        
+                    ${emailDetails.length > 0 ? "Email Details:\n" + emailDetails.join("\n") : ""}
+                    Extra information from the agent: ${(_e = (_d = kbQuestionInput === null || kbQuestionInput === void 0 ? void 0 : kbQuestionInput.value) === null || _d === void 0 ? void 0 : _d.trim()) !== null && _e !== void 0 ? _e : "Not provided"}
+                `;
+                // console.log("📝 Sending data to /comment-only route: ------------------", combinedText);
+                createCommentButton.textContent = "Generating...";
+                createCommentButton.setAttribute('disabled', 'true');
+                try {
+                    const response = yield fetch("http://127.0.0.1:5000/comment-only", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ text: combinedText })
+                    });
+                    const data = yield response.json();
+                    console.log("🗒️ Generated Comment:", data.comment);
+                    const commentResult = panel === null || panel === void 0 ? void 0 : panel.querySelector('#commentResult');
+                    if (commentResult) {
+                        commentResult.innerHTML = data.comment;
+                        commentResult.style.display = 'block';
+                    }
+                }
+                catch (error) {
+                    console.error("❌ Error generating comment:", error);
+                    alert("Failed to generate comment.");
+                }
+                finally {
+                    createCommentButton.textContent = "Generate Case Comment";
+                    createCommentButton.removeAttribute('disabled');
+                }
+            }));
+        }
+        if (summarizeButton) {
+            summarizeButton.addEventListener('click', () => __awaiter(void 0, void 0, void 0, function* () {
+                var _a, _b, _c, _d, _e, _f;
+                const caseDetails = getExtractedData();
+                const emailDetails = getExtractedEmailData();
+                const kbQuestionInput = document.querySelector('#kbQuestionInput');
+                const combinedText = `
+                    Case Overview
+                    Case Number: ${(_a = caseDetails["Case Number"]) !== null && _a !== void 0 ? _a : "Not found"}
+
+                    Subject: ${(_b = caseDetails["Subject"]) !== null && _b !== void 0 ? _b : "Not found"}
+
+                    Description: ${(_c = caseDetails["Description"]) !== null && _c !== void 0 ? _c : "Not found"}
+                    
+                    Extra: ${(_e = (_d = kbQuestionInput === null || kbQuestionInput === void 0 ? void 0 : kbQuestionInput.value) === null || _d === void 0 ? void 0 : _d.trim()) !== null && _e !== void 0 ? _e : "Not provided"}
+
+
+                    ${emailDetails.length > 0 ? "Email Details:\n" + emailDetails.join("\n") : ""}
+                `;
+                console.log("📨 Sending data to summarization API:", combinedText);
+                // Seting loading state
+                const originalButtonText = summarizeButton.textContent;
+                summarizeButton.textContent = "Summarizing...";
+                summarizeButton.setAttribute('disabled', 'true');
+                summarySection.style.display = 'block';
+                summaryText.innerHTML = `<em>Generating summary, please wait...</em>`;
+                try {
+                    const response = yield fetch('http://127.0.0.1:5000/summarize', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ text: combinedText })
+                    });
+                    const data = yield response.json();
+                    console.log("📩 Summary received:", data);
+                    summaryText.innerHTML = (_f = data.summary) !== null && _f !== void 0 ? _f : "No summary available";
+                    summarySection.style.display = 'block';
+                }
+                catch (error) {
+                    console.error("❌ Error fetching summary:", error);
+                    summaryText.innerHTML = "Failed to get summary.";
+                    summarySection.style.display = 'block';
+                }
+                finally {
+                    summarizeButton.textContent = originalButtonText;
+                    summarizeButton.removeAttribute('disabled');
+                }
+            }));
+        }
+        // if (summarizeButton) {
+        //     summarizeButton.addEventListener('click', async () => {
+        //         const originalButtonText = summarizeButton.textContent; // <-- ✅ fix is here
+        //         const caseDetails = getExtractedData();
+        //         const emailDetails = getExtractedEmailData();
+        //         const combinedText = `
+        //             Case Overview
+        //             Case Number: ${caseDetails["Case Number"] ?? "Not found"}
+        //             Subject: ${caseDetails["Subject"] ?? "Not found"}
+        //             Description: ${caseDetails["Description"] ?? "Not found"}
+        //             ${emailDetails.length > 0 ? "Email Details:\n" + emailDetails.join("\n") : ""}
+        //         `;
+        //         // Get optional question input
+        //         const kbQuestionInput = document.querySelector('#kbQuestionInput');
+        //         const extraQuestion = (kbQuestionInput as HTMLInputElement)?.value.trim();
+        //         console.log("📨 Sending data to summarization API:", combinedText);
+        //         summarizeButton.textContent = "Summarizing...";
+        //         summarizeButton.setAttribute('disabled', 'true');
+        //         summarySection.style.display = 'block';
+        //         summaryText.innerHTML = `<em>Generating summary, please wait...</em>`;
+        //         try {
+        //             // Build payload
+        //             const payload: { text: string; question?: string } = { text: combinedText };
+        //             if (extraQuestion) {
+        //                 payload.question = extraQuestion;
+        //             }
+        //             const response = await fetch('http://127.0.0.1:5000/summarize', {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json'
+        //                 },
+        //                 body: JSON.stringify(payload)
+        //             });
+        //             const data = await response.json();
+        //             console.log("📩 Summary received:", data);
+        //             summaryText.innerHTML = data.summary ?? "No summary available";
+        //             summarySection.style.display = 'block';
+        //         } catch (error) {
+        //             console.error("❌ Error fetching summary:", error);
+        //             summaryText.innerHTML = "Failed to get summary.";
+        //             summarySection.style.display = 'block';
+        //         } finally {
+        //             summarizeButton.textContent = originalButtonText;
+        //             summarizeButton.removeAttribute('disabled');
+        //         }
+        //     });
+        // }
+        // Close button
         const closeButton = panel.querySelector('#closePanel');
         if (closeButton) {
             closeButton.addEventListener('click', () => {
                 panel === null || panel === void 0 ? void 0 : panel.remove();
+                //panel?.remove();
             });
         }
     }
 };
 const getExtractedData = () => {
-    const fieldsToExtract = ["Case Number", "Subject", "Description"];
+    const fieldsToExtract = ["Subject", "Description"];
+    const fieldsToExtractSubject = ["Case Number"];
     const extractedData = {};
-    document.querySelectorAll('.test-id__output-root').forEach((element) => {
+    // Select the active container
+    const activeDiv = document.querySelector('.windowViewMode-maximized.active.lafPageHost');
+    if (!activeDiv) {
+        console.warn("Active div not found.");
+        return extractedData;
+    }
+    // Find all relevant sections inside the active div
+    const sectionContents = activeDiv.querySelectorAll('.test-id__section-content.slds-section__content.section__content.slds-p-horizontal_small');
+    const sectionContent = activeDiv.querySelector('.test-id__section-content.slds-section__content.section__content.slds-p-horizontal_small');
+    if (!sectionContent) {
+        console.warn("Section content not found within active div.");
+        return extractedData;
+    }
+    if (!sectionContents.length) {
+        console.warn("No section content found within active div.");
+        return extractedData;
+    }
+    sectionContent.querySelectorAll('.test-id__output-root').forEach((element) => {
         var _a, _b, _c, _d;
         const labelElement = element.querySelector('.test-id__field-label');
-        const valueElement = element.querySelector('.test-id__field-value');
+        const valueElement = element.querySelector('.test-id__field-value lightning-formatted-text');
         if (labelElement && valueElement) {
             const label = (_b = (_a = labelElement.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : "";
-            const value = (_d = (_c = valueElement.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : "";
-            if (fieldsToExtract.indexOf(label) !== -1) {
+            let value = (_d = (_c = valueElement.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : "";
+            // Handle multi-line descriptions (replace <br> with newlines)
+            value = value.replace(/<br\s*\/?>/gi, "\n");
+            if (fieldsToExtractSubject.includes(label)) {
                 extractedData[label] = value;
             }
         }
     });
-    return extractedData;
-};
-const observeremail = new MutationObserver(() => {
-    const listItems = document.querySelectorAll('ol li');
-    if (listItems.length > 0) {
-        let extractedEmails = [];
-        listItems.forEach(listItem => {
-            var _a;
-            const emailContentDiv = listItem.querySelector('.preamble_custom-summary');
-            if (emailContentDiv) {
-                const emailContent = (_a = emailContentDiv.textContent) === null || _a === void 0 ? void 0 : _a.trim();
-                if (emailContent) {
-                    console.log('Extracted email content:', emailContent);
-                    extractedEmails.push(emailContent);
+    // Loop through each section to find Subject and Description
+    sectionContents.forEach((section) => {
+        section.querySelectorAll('records-record-layout-item').forEach((recordItem) => {
+            var _a, _b, _c, _d;
+            const labelElement = recordItem.querySelector('.test-id__field-label');
+            const valueElement = recordItem.querySelector('.test-id__field-value lightning-formatted-text');
+            if (labelElement && valueElement) {
+                const label = (_b = (_a = labelElement.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : "";
+                let value = (_d = (_c = valueElement.textContent) === null || _c === void 0 ? void 0 : _c.trim()) !== null && _d !== void 0 ? _d : "";
+                // Handle multi-line descriptions (replace <br> with newlines)
+                value = value.replace(/<br\s*\/?>/gi, "\n");
+                if (fieldsToExtract.includes(label)) {
+                    extractedData[label] = value;
                 }
             }
         });
-        if (extractedEmails.length > 0) {
-            updateEmailPanel(extractedEmails);
-            observeremail.disconnect();
-        }
-    }
-});
+    });
+    return extractedData;
+};
 const updateEmailPanel = (emails) => {
     const emailDetailsList = document.querySelector('#emailDetailsList');
     if (emailDetailsList) {
@@ -953,33 +448,150 @@ const updateEmailPanel = (emails) => {
         });
     }
 };
+const getTableDataIAC = () => {
+    const table = document.querySelector('.ContentOverFlow table'); // Find the table
+    if (!table) {
+        console.warn("Table not found.");
+        return "Table not found.";
+    }
+    let tableData = [];
+    table.querySelectorAll('tr').forEach((row) => {
+        let rowData = [];
+        row.querySelectorAll('td, th').forEach((cell) => {
+            var _a, _b;
+            rowData.push((_b = (_a = cell.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : ""); // Extract cell text
+        });
+        tableData.push(rowData);
+    });
+    return tableData.map(row => row.join(' | ')).join('\n'); // Format the data
+};
+// const getExtractedEmailData = () => {
+//     const extractedEmails: string[] = [];
+//     // Find the container with `.resizeCaptureFrameWrapper > .skip-feed-wrapper`
+//     const container = document.querySelector('.resizeCaptureFrameWrapper .skip-feed-wrapper');
+//     if (!container) {
+//         console.warn("Container not found.");
+//         return extractedEmails;
+//     }
+//     // Find the <div> that contains the feed
+//     const feedDiv = container.querySelector('div[data-feed-type="Record"]');
+//     if (!feedDiv) {
+//         console.warn("Feed div not found.");
+//         return extractedEmails;
+//     }
+//     // Find the <ol> inside the feed div
+//     const listElement = feedDiv.querySelector('ol');
+//     if (!listElement) {
+//         console.warn("Ordered list <ol> not found.");
+//         return extractedEmails;
+//     }
+//     // Loop through each <li> inside the <ol>
+//     listElement.querySelectorAll('li').forEach((listItem) => {
+//         const emailText = listItem.textContent?.trim() ?? "";
+//         if (emailText) {
+//             extractedEmails.push(emailText);
+//         }
+//     });
+//     console.log("📧 Extracted Emails ------------------------------------------------------ :", extractedEmails);
+//     return extractedEmails;
+// };
+// const getExtractedEmailData = (): string[] => {
+//     const extractedEmails: string[] = [];
+//     // Step 1: Find the container
+//     const container = document.querySelector('.resizeCaptureFrameWrapper .skip-feed-wrapper');
+//     if (!container) {
+//         console.warn("⚠️ Container not found.");
+//         return extractedEmails;
+//     }
+//     // Step 2: Find all record feed divs inside the container (there might be more than one!)
+//     const feedDivs = container.querySelectorAll('div[data-feed-type="Record"]');
+//     if (!feedDivs.length) {
+//         console.warn("⚠️ No feed divs found.");
+//         return extractedEmails;
+//     }
+//     // Step 3: For each feed, extract its <ol> and <li> content
+//     feedDivs.forEach(feedDiv => {
+//         const listElement = feedDiv.querySelector('ol');
+//         if (!listElement) {
+//             console.warn("⚠️ No <ol> found in one of the feed divs.");
+//             return;
+//         }
+//         // Step 4: Loop through each <li> and get its trimmed text content
+//         listElement.querySelectorAll('li').forEach(listItem => {
+//             const rawText = listItem.textContent?.trim();
+//             if (rawText && rawText.length > 0) {
+//                 extractedEmails.push(rawText);
+//             }
+//         });
+//     });
+//     console.log("📧 Extracted Clean Email Texts:", extractedEmails);
+//     return extractedEmails;
+// };
 const getExtractedEmailData = () => {
-    var _a, _b, _c, _d, _e;
-    let emailContent = null;
-    const iframe = document.querySelector('ol li iframe');
-    if (iframe) {
-        try {
-            const iframeDocument = iframe.contentDocument || ((_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document);
-            if (iframeDocument) {
-                emailContent = (_c = (_b = iframeDocument.body) === null || _b === void 0 ? void 0 : _b.textContent) === null || _c === void 0 ? void 0 : _c.trim();
-                console.log('>>>>>>>>>>>>>>    ', emailContent, '    <<<<<<<<<<<<<<<<<<<<<');
+    const extractedEmails = [];
+    const container = document.querySelector('.resizeCaptureFrameWrapper .skip-feed-wrapper');
+    if (!container) {
+        console.warn("⚠️ Container not found.");
+        return extractedEmails;
+    }
+    const feedDivs = container.querySelectorAll('div[data-feed-type="Record"]');
+    if (!feedDivs.length) {
+        console.warn("⚠️ No feed divs found.");
+        return extractedEmails;
+    }
+    feedDivs.forEach(feedDiv => {
+        const listElement = feedDiv.querySelector('ol');
+        if (!listElement)
+            return;
+        listElement.querySelectorAll('li').forEach(listItem => {
+            var _a, _b;
+            const rawText = (_b = (_a = listItem.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : "";
+            // Skip if it matches a system metadata block (starts with common labels)
+            const isSystemMetadata = /^Subject:|^Business Impact:|^Genesys Queue Name:|^Image|^Contact Name:|^Status Detail:|^Preferred Contact Method:|^Support Alert Notes:/i.test(rawText);
+            if (rawText.length > 0 && !isSystemMetadata) {
+                extractedEmails.push(rawText);
+            }
+        });
+    });
+    console.log("📧 Extracted Clean Email Texts:", extractedEmails);
+    return extractedEmails;
+};
+const getExtractedKnowledgeBaseText = () => {
+    let knowledgeText = "";
+    // Step 1: Get the active Salesforce container
+    const activeDiv = document.querySelector('.windowViewMode-maximized.active.lafPageHost');
+    if (!activeDiv) {
+        console.warn("🧠 Active div not found.");
+        return knowledgeText;
+    }
+    // Step 2: Select all the target rows
+    const rows = activeDiv.querySelectorAll('records-record-layout-row.slds-form__row');
+    if (!rows.length) {
+        console.warn("🧠 No records-record-layout-row elements found.");
+        return knowledgeText;
+    }
+    rows.forEach(row => {
+        var _a, _b;
+        // Look for slots or textual content within the row
+        const slot = row.querySelector('slot');
+        if (slot) {
+            const text = (_b = (_a = slot.textContent) === null || _a === void 0 ? void 0 : _a.trim()) !== null && _b !== void 0 ? _b : "";
+            if (text.length > 0) {
+                knowledgeText += text + "\n\n";
             }
         }
-        catch (error) {
-            console.error("Error accessing iframe content:", error);
-        }
+    });
+    knowledgeText = knowledgeText.trim();
+    if (knowledgeText.length === 0) {
+        console.warn("🧠 No meaningful text found in Knowledge_base section.");
     }
-    else {
-        const richTextOutput = document.querySelector('emailui-rich-text-output[value]');
-        if (richTextOutput) {
-            const htmlContent = richTextOutput.getAttribute('value');
-            if (htmlContent) {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                emailContent = (_e = (_d = doc.body) === null || _d === void 0 ? void 0 : _d.textContent) === null || _e === void 0 ? void 0 : _e.trim();
-            }
-        }
-    }
-    return emailContent;
+    return knowledgeText;
+};
+const copyTextToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+        console.log("📋 Knowledge_base copied to clipboard!");
+    }).catch(err => {
+        console.error("❌ Failed to copy to clipboard:", err);
+    });
 };
 injectFloatingButton();
